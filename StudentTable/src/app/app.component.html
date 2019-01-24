@@ -1,0 +1,14 @@
+<div>
+  <table [class.StudTable]="true">
+    <tr *ngFor="let student of students; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ student.secondName }}</td>
+      <td>{{ student.name }}</td>
+      <td>{{ student.patronymic }}</td>
+      <td>{{ student.age }}</td>
+      <td>{{ student.mark}}</td>
+    </tr>
+  </table>
+<button *ngIf="highlightLowScore " (click)="highlighting()">Пометить</button>
+<button *ngIf="!highlightLowScore" (click)="highlighting()">Разметить</button>
+</div>
