@@ -1,14 +1,40 @@
 <div>
-  <table [class.StudTable]="true">
-    <tr *ngFor="let student of students; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td>{{ student.secondName }}</td>
-      <td>{{ student.name }}</td>
-      <td>{{ student.patronymic }}</td>
-      <td>{{ student.age }}</td>
-      <td>{{ student.mark}}</td>
-    </tr>
-  </table>
-<button *ngIf="highlightLowScore " (click)="highlighting()">Пометить</button>
-<button *ngIf="!highlightLowScore" (click)="highlighting()">Разметить</button>
+  <div class = Table>
+    <div [ngClass]="{'highlightClass': checkFunc(student),
+                     'FindingUser': FindUser(student)}"
+          class = RowTable
+         *ngFor="let student of students let i = index">
+      <div class = ColumnTable>{{ i + 1 }}</div>
+      <div class = ColumnTable>{{ student.secondName }}</div>
+      <div class = ColumnTable>{{ student.name }}</div>
+      <div class = ColumnTable>{{ student.patronymic }}</div>
+      <div class = ColumnTable>{{ student.age }}</div>
+      <div class = ColumnTable>{{ student.mark}}</div>
+      <div (click)="DeleteUser($event, student)" [class.ColumnTable] = "true">X</div>
+    </div>
+  </div>
+  <div class="highlightPeople">
+    <button (click)="highlighting()">{{TextButton}}</button>
+  </div>
+  <div class="FindUser">
+    <input #FieldForFind (input)="UserForFind = FieldForFind.value" type="text">
+  </div>
+  <div class="Sort">
+    <select #SelectedMethod (change)="Sort(SelectedMethod.selectedIndex)">
+      <option value="" selected disabled hidden>Выберите метод сортировки</option>
+      <option>По фамилии</option>
+      <option>По имени</option>
+      <option>По отчеству</option>
+      <option>По возрасту</option>
+      <option>По оценке</option>
+    </select>
+  </div>
+  <!--<div class="PopUpOfDelete">-->
+    <!--<label>Удалить?</label>-->
+    <!--<button>Да</button>-->
+    <!--<button>Нет</button>-->
+  <!--</div>-->
 </div>
+
+<!--flex-direction: row column-->
+<!--position absolute-->

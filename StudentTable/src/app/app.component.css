@@ -1,3 +1,33 @@
-.StudTable tr {
-  border: 2px solid black;
+
+
+.Table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ColumnTable{
+  display: table-cell;
+  text-align: center;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}
+
+.RowTable{
+  display: table-row;
+}
+
+.highlightClass{
+  background: red;
+}
+
+.FindingUser{
+  background: aquamarine;
+}
+
+.PopUpOfDelete{
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  border: 1px solid #ccc;
 }
