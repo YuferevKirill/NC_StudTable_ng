@@ -1,7 +1,5 @@
-// TODO Сделать возможность фильтрации студентов по дате рождения и среднему баллу. Оставлять в таблице только тех кто попал в фильтр
-// TODO Подтверждение через попап. После перезагрузки страницы сохранения не обязательно (Удаление готово, осталось только попап)
-
 import {Component} from '@angular/core';
+import {Student} from './models/student.model';
 
 @Component({
   selector: 'app-root',
@@ -9,18 +7,20 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  UserForFind: string;
-  TextButton = 'Выделить';
+  UserForFind = '';
+  TextButton = 'Выделить двоечников';
   highlightLowScore = false;
-  title = 'StudentTable';
-  students = [
+  students: Student[] = [
     {secondName: 'Пупкин', name: 'Василий', patronymic: 'Андреевич', age: '18.11.1996', mark: 4},
     {secondName: 'Папкин', name: 'Игорь', patronymic: 'Григорьевич', age: '21.02.1999', mark: 1},
     {secondName: 'Шапкин', name: 'Владислав', patronymic: 'Александрович', age: '12.10.1983', mark: 2},
     {secondName: 'Шубкин', name: 'Никита', patronymic: 'Борисович', age: '03.05.1994', mark: 3},
     {secondName: 'Лапкин', name: 'Антон', patronymic: 'Романович', age: '22.06.1989', mark: 5},
   ];
-  IsDeletePopUpVisible: false;
+  isDeletePopUpVisible: boolean;
+  isDeleteStudent: Student;
+  markForFilter = '';
+  dateForFilter = '';
 
   highlighting(): void  {
     switch (this.highlightLowScore) {
@@ -30,27 +30,19 @@ export class AppComponent {
         return;
       case true:
         this.highlightLowScore = false;
-        this.TextButton = 'Выделить';
+        this.TextButton = 'Выделить двоечников';
         return;
     }
   }
 
-  checkFunc(student: { patronymic: string; name: string; age: string; mark: number; secondName: string }): boolean {
-    if (student.mark < 3 && this.highlightLowScore === true) {
-      return true;
-    } else {
-      return false;
-    }
+  checkFunc(student: Student): boolean {
+    return student.mark < 3 && this.highlightLowScore === true;
   }
 
-  FindUser(student: { patronymic: string; name: string; age: string; mark: number; secondName: string }): boolean {
-    const StringForFind = student.secondName + ' ' + student.name;
+  FindUser(student: Student): boolean {
+    const StringForFind = (student.secondName + ' ' + student.name + ' ' + student.patronymic).toLowerCase();
     if (this.UserForFind !== '') {
-      if (StringForFind.includes(this.UserForFind)) {
-        return true;
-      } else {
-        return false;
-      }
+      return StringForFind.includes((this.UserForFind).toLowerCase());
     }
   }
 
@@ -58,11 +50,11 @@ export class AppComponent {
     switch (selectedIndex) {
       case 1:
         this.students.sort(function (student1, student2) {
-          const nameA = student1.secondName.toLowerCase(), nameB = student2.secondName.toLowerCase()
-          if (nameA < nameB) {
+          const secondNameA = student1.secondName.toLowerCase(), secondNameB = student2.secondName.toLowerCase()
+          if (secondNameA < secondNameB) {
             return -1;
           }
-          if (nameA > nameB) {
+          if (secondNameA > secondNameB) {
             return 1;
           }
           return 0;
@@ -82,11 +74,11 @@ export class AppComponent {
         return;
       case 3:
         this.students.sort(function (student1, student2) {
-          const nameA = student1.patronymic.toLowerCase(), nameB = student2.patronymic.toLowerCase()
-          if (nameA < nameB) {
+          const patronymicA = student1.patronymic.toLowerCase(), patronymicB = student2.patronymic.toLowerCase()
+          if (patronymicA < patronymicB) {
             return -1;
           }
-          if (nameA > nameB) {
+          if (patronymicA > patronymicB) {
             return 1;
           }
           return 0;
@@ -106,8 +98,40 @@ export class AppComponent {
     }
   }
 
-  DeleteUser(student: { patronymic: string; name: string; age: string; mark: number; secondName: string }) {
+  deleteRow(student: Student): void {
     const indexToRemove = this.students.findIndex(obj => obj === student);
     this.students.splice(indexToRemove , 1);
+  }
+
+  showPopup(student: Student): void {
+    this.isDeletePopUpVisible = true;
+    this.isDeleteStudent = student;
+  }
+
+  hidePopup(): void {
+    this.isDeletePopUpVisible = false;
+    this.isDeleteStudent = null;
+  }
+
+  CheckFilterMark(student: Student): boolean {
+        return student.mark > +this.markForFilter;
+  }
+
+  CheckFilterDate(student: Student): boolean {
+    const date = new Date(student.age.split('.').reverse().join('-'));
+    return date > new Date(this.dateForFilter.split('.').reverse().join('-'));
+  }
+
+  CheckFilter(student: Student): boolean {
+    if (this.markForFilter !== '' && this.dateForFilter !== '') {
+      return this.CheckFilterMark(student) && this.CheckFilterDate(student);
+    }
+    if (this.markForFilter !== '') {
+      return this.CheckFilterMark(student);
+    } else if (this.dateForFilter !== '') {
+      return this.CheckFilterDate(student);
+    }  else {
+      return true;
+    }
   }
 }

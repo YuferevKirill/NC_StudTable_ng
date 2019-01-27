@@ -1,0 +1,6 @@
+.ColumnTable{
+  display: table-cell;
+  text-align: center;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}

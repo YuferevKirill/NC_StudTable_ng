@@ -1,0 +1,7 @@
+<div [ngClass]="{'PopUpOfDelete': true}">
+  <label>Удалить студента с фамилией {{student.secondName}}?</label>
+  <div [ngClass]="{'PopUpButtons': true}" >
+    <button (click)="deleteStudent()">Да</button>
+    <button (click)="hide()">Нет</button>
+  </div>
+</div>

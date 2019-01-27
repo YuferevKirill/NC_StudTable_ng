@@ -1,16 +1,7 @@
-
-
 .Table {
   display: table;
   width: 100%;
   border-collapse: collapse;
-}
-
-.ColumnTable{
-  display: table-cell;
-  text-align: center;
-  border: 1px solid #ccc;
-  vertical-align: middle;
 }
 
 .RowTable{
@@ -26,8 +17,22 @@
 }
 
 .PopUpOfDelete{
-  margin-left: auto;
-  margin-right: auto;
-  position: absolute;
-  border: 1px solid #ccc;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.FilterFields{
+  margin: 5px;
+}
+
+.Field {
+  margin: 5px;
 }

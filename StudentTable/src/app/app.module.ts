@@ -4,11 +4,15 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { StudentComponent } from './student/student.component';
+import { PopupComponent } from './popup/popup.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StudentComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

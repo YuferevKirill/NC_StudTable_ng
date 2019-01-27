@@ -1,0 +1,17 @@
+.PopUpOfDelete {
+  background: lightgrey;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.PopUpButtons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+button{
+  border-radius: 5px;
+}
+

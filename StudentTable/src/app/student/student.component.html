@@ -1,0 +1,7 @@
+<div [ngClass]="{'ColumnTable': true}">{{ index }}</div>
+<div [ngClass]="{'ColumnTable': true}">{{ student.secondName }}</div>
+<div [ngClass]="{'ColumnTable': true}">{{ student.name }}</div>
+<div [ngClass]="{'ColumnTable': true}">{{ student.patronymic }}</div>
+<div [ngClass]="{'ColumnTable': true}">{{ student.age }}</div>
+<div [ngClass]="{'ColumnTable': true}">{{ student.mark}}</div>
+<div [ngClass]="{'ColumnTable': true}" (click)="onDelete()">Удалить</div>

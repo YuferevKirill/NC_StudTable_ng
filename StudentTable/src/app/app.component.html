@@ -1,25 +1,18 @@
 <div>
-  <div class = Table>
-    <div [ngClass]="{'highlightClass': checkFunc(student),
-                     'FindingUser': FindUser(student)}"
-          class = RowTable
-         *ngFor="let student of students let i = index">
-      <div class = ColumnTable>{{ i + 1 }}</div>
-      <div class = ColumnTable>{{ student.secondName }}</div>
-      <div class = ColumnTable>{{ student.name }}</div>
-      <div class = ColumnTable>{{ student.patronymic }}</div>
-      <div class = ColumnTable>{{ student.age }}</div>
-      <div class = ColumnTable>{{ student.mark}}</div>
-      <div (click)="DeleteUser(student)" class = ColumnTable>X</div>
-    </div>
+  <div [ngClass]="{'Table': true}">
+    <ng-container *ngFor="let student of students let i=index">
+      <app-student [ngClass]="{'RowTable': true, 'highlightClass': checkFunc(student), 'FindingUser': FindUser(student)}"
+                   *ngIf="CheckFilter(student)"
+                   [student]="student" [index]="i + 1" (showPopup)="showPopup(student)"></app-student>
+    </ng-container>
   </div>
-  <div class="highlightPeople">
+  <div [ngClass]="{'highlightPeople': true, 'Field': true}">
     <button (click)="highlighting()">{{TextButton}}</button>
   </div>
-  <div class="FindUser">
-    <input #FieldForFind (input)="UserForFind = FieldForFind.value" type="text">
+  <div [ngClass]="{'FindUser': true, 'Field': true}">
+    <input #FieldForFind placeholder="Поиск студента..." (input)="UserForFind = FieldForFind.value" type="text">
   </div>
-  <div class="Sort">
+  <div [ngClass]="{'Field': true, 'Sort': true}">
     <select #SelectedMethod (change)="Sort(SelectedMethod.selectedIndex)">
       <option value="" selected disabled hidden>Выберите метод сортировки</option>
       <option>По фамилии</option>
@@ -29,12 +22,9 @@
       <option>По оценке</option>
     </select>
   </div>
-  <!--<div *ngIf="IsDeletePopUpVisible">-->
-    <!--<label>Удалить?</label>-->
-    <!--<button>Да</button>-->
-    <!--<button>Нет</button>-->
-  <!--</div>-->
+  <label [ngClass]="{'Field': true}">Фильтрация:</label>
+  <input [ngClass]="{'FilterFields': true}" #FieldForMark placeholder="Введите оценку" (input)="markForFilter = FieldForMark.value" type="text">
+  <input [ngClass]="{'FilterFields': true}" #FieldForYear placeholder="Введите год" (input)="dateForFilter = FieldForYear.value" type="text">
+  <app-popup [ngClass]="{'PopUpOfDelete': true}" *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent"
+             (hidePopup)="hidePopup()" (deleteRow)="deleteRow(isDeleteStudent)"></app-popup>
 </div>
-
-<!--flex-direction: row column-->
-<!--position absolute-->
