@@ -10,7 +10,7 @@
       <div class = ColumnTable>{{ student.patronymic }}</div>
       <div class = ColumnTable>{{ student.age }}</div>
       <div class = ColumnTable>{{ student.mark}}</div>
-      <div (click)="DeleteUser($event, student)" [class.ColumnTable] = "true">X</div>
+      <div (click)="DeleteUser(student)" class = ColumnTable>X</div>
     </div>
   </div>
   <div class="highlightPeople">
@@ -29,7 +29,7 @@
       <option>По оценке</option>
     </select>
   </div>
-  <!--<div class="PopUpOfDelete">-->
+  <!--<div *ngIf="IsDeletePopUpVisible">-->
     <!--<label>Удалить?</label>-->
     <!--<button>Да</button>-->
     <!--<button>Нет</button>-->

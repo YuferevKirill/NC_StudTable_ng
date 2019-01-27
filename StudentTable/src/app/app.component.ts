@@ -1,6 +1,5 @@
 // TODO Сделать возможность фильтрации студентов по дате рождения и среднему баллу. Оставлять в таблице только тех кто попал в фильтр
-// TODO Сделать возможность удаления студента, с подтверждением. Подтверждение через попап. После перезагрузки страницы сохранения
-//  не обязательно
+// TODO Подтверждение через попап. После перезагрузки страницы сохранения не обязательно (Удаление готово, осталось только попап)
 
 import {Component} from '@angular/core';
 
@@ -21,6 +20,7 @@ export class AppComponent {
     {secondName: 'Шубкин', name: 'Никита', patronymic: 'Борисович', age: '03.05.1994', mark: 3},
     {secondName: 'Лапкин', name: 'Антон', patronymic: 'Романович', age: '22.06.1989', mark: 5},
   ];
+  IsDeletePopUpVisible: false;
 
   highlighting(): void  {
     switch (this.highlightLowScore) {
@@ -56,7 +56,7 @@ export class AppComponent {
 
   Sort(selectedIndex: number): void {
     switch (selectedIndex) {
-      case 0:
+      case 1:
         this.students.sort(function (student1, student2) {
           const nameA = student1.secondName.toLowerCase(), nameB = student2.secondName.toLowerCase()
           if (nameA < nameB) {
@@ -68,7 +68,7 @@ export class AppComponent {
           return 0;
         });
         return;
-      case 1:
+      case 2:
         this.students.sort(function (student1, student2) {
           const nameA = student1.name.toLowerCase(), nameB = student2.name.toLowerCase()
           if (nameA < nameB) {
@@ -80,7 +80,7 @@ export class AppComponent {
           return 0;
         });
         return;
-      case 2:
+      case 3:
         this.students.sort(function (student1, student2) {
           const nameA = student1.patronymic.toLowerCase(), nameB = student2.patronymic.toLowerCase()
           if (nameA < nameB) {
@@ -92,17 +92,22 @@ export class AppComponent {
           return 0;
         });
         return;
-      case 3:
+      case 4:
         this.students.sort(function(a, b) {
           const dateA = +a.age.slice(-4), dateB = +b.age.slice(-4);
           return dateA - dateB;
         });
         return;
-      case 4:
+      case 5:
         this.students.sort(function (student1, student2) {
           return student1.mark - student2.mark;
         });
         return;
     }
+  }
+
+  DeleteUser(student: { patronymic: string; name: string; age: string; mark: number; secondName: string }) {
+    const indexToRemove = this.students.findIndex(obj => obj === student);
+    this.students.splice(indexToRemove , 1);
   }
 }
