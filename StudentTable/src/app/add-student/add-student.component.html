@@ -1,11 +1,10 @@
-<form novalidate [formGroup]="newStudentForm"
-      [ngClass]="{'Form': true}">
+<form novalidate [formGroup]="newStudentForm" (ngSubmit)="onSubmit()">
   <label>Добавление студента</label>
-  <fieldset formGroupName="FIO">
+  <div formGroupName="FIO">
     <input type="text" name="name" formControlName="name"/>
     <input type="text" name="secondName" formControlName="secondName"/>
     <input type="text" name="patronymic" formControlName="patronymic"/>
-  </fieldset>
+  </div>
   <input type="text" name="age" formControlName="Age"/>
   <input type="text" name="mark" formControlName="Mark"/>
   <input type="submit" value="Создать" (submit)="AddNewStudent()">

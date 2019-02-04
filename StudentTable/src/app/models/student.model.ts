@@ -1,7 +1,7 @@
 export interface Student {
-  readonly secondName: string;
-  readonly name: string;
-  readonly patronymic: string;
-  readonly age: string;
-  readonly mark: number;
+   secondName: string;
+   name: string;
+   patronymic: string;
+   age: string;
+   mark: number;
 }

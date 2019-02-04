@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {Student} from '../models/student.model';
 
 @Component({
@@ -11,8 +11,7 @@ export class AddStudentComponent implements OnInit {
 
   @Output() AddStudent = new EventEmitter<Student>();
   @Output() HideForm = new EventEmitter<void>();
-
-  newStudent: Student;
+  @Output() newStudent;
 
   public newStudentForm: FormGroup;
 
@@ -42,5 +41,18 @@ export class AddStudentComponent implements OnInit {
 
   hideForm(): void {
     this.HideForm.emit();
+  }
+
+  onSubmit() {
+    const formValue = this.newStudentForm.value;
+    this.newStudent = {
+      age: formValue.Age,
+      mark: formValue.Mark,
+      name: formValue.FIO.name,
+      patronymic: formValue.FIO.patronymic,
+      secondName: formValue.FIO.secondName
+    };
+    console.log(this.newStudent);
+    this.AddStudent.emit(this.newStudent);
   }
 }

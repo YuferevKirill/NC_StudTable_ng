@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { StudentComponent } from './student/student.component';
 import { PopupComponent } from './popup/popup.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
@@ -21,7 +21,7 @@ import { AddStudentComponent } from './add-student/add-student.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

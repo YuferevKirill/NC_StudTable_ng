@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Student} from './models/student.model';
 
 @Component({
@@ -21,6 +21,10 @@ export class AppComponent {
   isDeleteStudent: Student;
   markForFilter = '';
   dateForFilter = '';
+  AddedStudent: Student;
+  isAddPopUpVisible: boolean;
+
+  @Input() newStudent;
 
   highlighting(): void  {
     switch (this.highlightLowScore) {
@@ -135,7 +139,16 @@ export class AppComponent {
     }
   }
 
-  AddNewStudent() {
+  showAddPopup(): void {
+    this.isAddPopUpVisible = true;
+  }
 
+  hideAddPopup(): void {
+    this.isAddPopUpVisible = false;
+    this.AddedStudent = null;
+  }
+
+  AddNewStudent(student: Student): void {
+console.log(student);
   }
 }
