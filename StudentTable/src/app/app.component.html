@@ -25,6 +25,9 @@
   <label [ngClass]="{'Field': true}">Фильтрация:</label>
   <input [ngClass]="{'FilterFields': true}" #FieldForMark placeholder="Введите оценку" (input)="markForFilter = FieldForMark.value" type="text">
   <input [ngClass]="{'FilterFields': true}" #FieldForYear placeholder="Введите год" (input)="dateForFilter = FieldForYear.value" type="text">
+  <div>
+    <button (click)="AddNewStudent()">Добавить студента</button>
+  </div>
   <app-popup [ngClass]="{'PopUpOfDelete': true}" *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent"
              (hidePopup)="hidePopup()" (deleteRow)="deleteRow(isDeleteStudent)"></app-popup>
 </div>

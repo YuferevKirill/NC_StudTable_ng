@@ -1,0 +1,13 @@
+<form novalidate [formGroup]="newStudentForm"
+      [ngClass]="{'Form': true}">
+  <label>Добавление студента</label>
+  <fieldset formGroupName="FIO">
+    <input type="text" name="name" formControlName="name"/>
+    <input type="text" name="secondName" formControlName="secondName"/>
+    <input type="text" name="patronymic" formControlName="patronymic"/>
+  </fieldset>
+  <input type="text" name="age" formControlName="Age"/>
+  <input type="text" name="mark" formControlName="Mark"/>
+  <input type="submit" value="Создать" (submit)="AddNewStudent()">
+  <button (click)="hideForm()">Отменить</button>
+</form>

@@ -134,4 +134,8 @@ export class AppComponent {
       return true;
     }
   }
+
+  AddNewStudent() {
+
+  }
 }

@@ -20,5 +20,4 @@ export class StudentComponent implements OnInit {
   onDelete(): void {
     this.showPopup.emit(this.student);
   }
-
 }
