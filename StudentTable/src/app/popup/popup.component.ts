@@ -10,7 +10,7 @@ export class PopupComponent implements OnInit {
 
   @Input() student: Student;
   @Output() hidePopup = new EventEmitter<void>();
-  @Output() deleteRow = new EventEmitter<Student>();
+  @Output() deleteRow = new EventEmitter<void>();
 
   constructor() { }
 
@@ -18,7 +18,7 @@ export class PopupComponent implements OnInit {
   }
 
   deleteStudent(): void {
-    this.deleteRow.emit(this.student);
+    this.deleteRow.emit();
     this.hide();
   }
 

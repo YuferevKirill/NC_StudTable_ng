@@ -24,7 +24,7 @@ export class AppComponent {
   AddedStudent: Student;
   isAddPopUpVisible: boolean;
 
-  @Input() newStudent;
+  newStudent: Student;
 
   highlighting(): void  {
     switch (this.highlightLowScore) {
@@ -102,9 +102,9 @@ export class AppComponent {
     }
   }
 
-  deleteRow(student: Student): void {
-    const indexToRemove = this.students.findIndex(obj => obj === student);
-    this.students.splice(indexToRemove , 1);
+  deleteRow(): void {
+    const indexToRemove = this.students.findIndex(obj => obj === this.isDeleteStudent);
+    this.students.splice(indexToRemove, 1);
   }
 
   showPopup(student: Student): void {
@@ -148,7 +148,9 @@ export class AppComponent {
     this.AddedStudent = null;
   }
 
-  AddNewStudent(student: Student): void {
-console.log(student);
+  addNewStudent(student: Student): void {
+    console.log(student);
+    this.students.push(student);
+    this.isAddPopUpVisible = false;
   }
 }

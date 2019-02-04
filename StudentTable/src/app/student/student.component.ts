@@ -11,6 +11,7 @@ export class StudentComponent implements OnInit {
   @Input() student: Student;
   @Input() index: number;
   @Output() showPopup = new EventEmitter<Student>();
+  @Output() ChangeStudent = new EventEmitter<Student>();
 
   constructor() { }
 
@@ -19,5 +20,9 @@ export class StudentComponent implements OnInit {
 
   onDelete(): void {
     this.showPopup.emit(this.student);
+  }
+
+  onChange() {
+    this.ChangeStudent.emit(this.student);
   }
 }

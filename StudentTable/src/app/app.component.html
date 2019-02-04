@@ -29,6 +29,7 @@
     <button (click)="showAddPopup()">Добавить студента</button>
   </div>
   <app-popup [ngClass]="{'PopUpOfDelete': true}" *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent"
-             (hidePopup)="hidePopup()" (deleteRow)="deleteRow(isDeleteStudent)"></app-popup>
-  <app-add-student [ngClass]="{'PopUpOfDelete': true}" *ngIf="isAddPopUpVisible" (HideForm)="hideAddPopup()" (AddStudent)="AddNewStudent(newStudent)"></app-add-student>-
+             (hidePopup)="hidePopup()" (deleteRow)="deleteRow()"></app-popup>
+  <app-add-student [ngClass]="{'PopUpOfDelete': true}" *ngIf="isAddPopUpVisible"
+                   (HideForm)="hideAddPopup()" (addNewStudent)="addNewStudent($event)"></app-add-student>
 </div>

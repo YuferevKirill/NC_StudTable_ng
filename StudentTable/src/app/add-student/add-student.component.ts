@@ -9,9 +9,10 @@ import {Student} from '../models/student.model';
 })
 export class AddStudentComponent implements OnInit {
 
-  @Output() AddStudent = new EventEmitter<Student>();
-  @Output() HideForm = new EventEmitter<void>();
-  @Output() newStudent;
+  @Output() addNewStudent = new EventEmitter<Student>();
+  @Output() HideForm = new EventEmitter<string>();
+
+  newStudent: Student;
 
   public newStudentForm: FormGroup;
 
@@ -26,21 +27,28 @@ export class AddStudentComponent implements OnInit {
       FIO: new FormGroup({
         name: new FormControl(''),
         secondName: new FormControl(''),
-        patronymic: new FormControl('')
-      }, [Validators.required, Validators.minLength(5)]),
+        patronymic: new FormControl('',[Validators.required, Validators.minLength(5)])
+      }),
       Age: new FormControl(''),
       Mark: new FormControl('')
     });
   }
 
-  AddNewStudent(): void {
-
-    this.AddStudent.emit(this.newStudent);
-    this.HideForm.emit();
-  }
+  // AddNewStudent(): void {
+  //   const formValue = this.newStudentForm.value;
+  //   this.newStudent = {
+  //     age: formValue.Age,
+  //     mark: formValue.Mark,
+  //     name: formValue.FIO.name,
+  //     patronymic: formValue.FIO.patronymic,
+  //     secondName: formValue.FIO.secondName
+  //   };
+  //   this.addNewStudent.emit(this.newStudent);
+  //   this.HideForm.emit();
+  // }
 
   hideForm(): void {
-    this.HideForm.emit();
+    this.HideForm.emit('test');
   }
 
   onSubmit() {
@@ -52,7 +60,6 @@ export class AddStudentComponent implements OnInit {
       patronymic: formValue.FIO.patronymic,
       secondName: formValue.FIO.secondName
     };
-    console.log(this.newStudent);
-    this.AddStudent.emit(this.newStudent);
+    this.addNewStudent.emit(this.newStudent);
   }
 }
