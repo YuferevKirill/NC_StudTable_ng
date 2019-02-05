@@ -36,3 +36,10 @@
 .Field {
   margin: 5px;
 }
+
+.hovered {
+  transform: scale(1.05);
+  border-color: coral;
+  transition: .5s all;
+}
+

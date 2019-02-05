@@ -8,7 +8,7 @@
     </ng-container>
   </div>
   <div [ngClass]="{'highlightPeople': true, 'Field': true}">
-    <button (click)="highlighting()">{{TextButton}}</button>
+    <button (click)="highlighting()" appHoverDirective>{{TextButton}}</button>
   </div>
   <div [ngClass]="{'FindUser': true, 'Field': true}">
     <input #FieldForFind placeholder="Поиск студента..." (input)="UserForFind = FieldForFind.value" type="text">
@@ -27,7 +27,7 @@
   <input [ngClass]="{'FilterFields': true}" #FieldForMark placeholder="Введите оценку" (input)="markForFilter = FieldForMark.value" type="text">
   <input [ngClass]="{'FilterFields': true}" #FieldForYear placeholder="Введите год" (input)="dateForFilter = FieldForYear.value" type="text">
   <div>
-    <button (click)="showAddPopup()">Добавить студента</button>
+    <button (click)="showAddPopup()" appHoverDirective>Добавить студента</button>
   </div>
   <app-popup [ngClass]="{'PopUp': true}" *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent"
              (hidePopup)="hidePopup()" (deleteRow)="deleteRow()"></app-popup>

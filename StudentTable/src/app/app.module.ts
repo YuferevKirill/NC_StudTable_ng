@@ -8,6 +8,8 @@ import { StudentComponent } from './student/student.component';
 import { PopupComponent } from './popup/popup.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { AddStudentComponent } from './add-student/add-student.component';
+import { HoverDirectiveDirective } from './hover-directive.directive';
+import { CustomPipePipe } from './custom-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { AddStudentComponent } from './add-student/add-student.component';
     PopupComponent,
     ChangeInfoComponent,
     AddStudentComponent,
+    HoverDirectiveDirective,
+    CustomPipePipe,
   ],
   imports: [
     BrowserModule,
