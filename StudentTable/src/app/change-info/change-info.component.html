@@ -18,7 +18,7 @@
     <input type="text" name="mark" formControlName="mark"/>
   </label>
   <div [ngClass]="{'EditStudentFormButtons': true}">
-    <input type="submit" value="Создать" [disabled]="editStudentForm.invalid">
+    <input type="submit" value="Изменить" [disabled]="editStudentForm.invalid">
     <button (click)="hideForm()">Отменить</button>
   </div>
 </form>

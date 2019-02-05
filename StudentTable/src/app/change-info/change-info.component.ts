@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../models/student.model';
 
 @Component({
   selector: 'app-change-info',
   templateUrl: './change-info.component.html',
-  styleUrls: ['./change-info.component.css']
+  styleUrls: ['./change-info.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangeInfoComponent implements OnInit {
 

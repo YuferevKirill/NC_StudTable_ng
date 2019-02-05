@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormControl, ValidationErrors} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormGroup, Validators, FormControl, ValidationErrors} from '@angular/forms';
 import {Student} from '../models/student.model';
 
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
-  styleUrls: ['./add-student.component.css']
+  styleUrls: ['./add-student.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddStudentComponent implements OnInit {
 

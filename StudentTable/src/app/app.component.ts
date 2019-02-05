@@ -1,10 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Student} from './models/student.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   UserForFind = '';
@@ -26,7 +27,6 @@ export class AppComponent {
   isAddPopUpVisible: boolean;
   isChangePopUpVisible: boolean;
 
-  newStudent: Student;
   private indexOfChangedStudent: number;
 
   highlighting(): void {
