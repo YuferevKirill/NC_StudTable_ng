@@ -34,19 +34,6 @@ export class AddStudentComponent implements OnInit {
     });
   }
 
-  // AddNewStudent(): void {
-  //   const formValue = this.newStudentForm.value;
-  //   this.newStudent = {
-  //     age: formValue.Age,
-  //     mark: formValue.Mark,
-  //     name: formValue.FIO.name,
-  //     patronymic: formValue.FIO.patronymic,
-  //     secondName: formValue.FIO.secondName
-  //   };
-  //   this.addNewStudent.emit(this.newStudent);
-  //   this.HideForm.emit();
-  // }
-
   hideForm(): void {
     this.HideForm.emit('test');
   }

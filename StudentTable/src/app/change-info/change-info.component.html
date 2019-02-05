@@ -1,3 +1,24 @@
-<p>
-
-</p>
+<form novalidate [ngClass]="{'EditStudentForm': true}" [formGroup]="editStudentForm" (ngSubmit)="onSubmit()">
+  <label>Изменение студента</label>
+  <div formGroupName="FIO">
+    <label> Имя:
+      <input type="text" name="name" formControlName="name"/>
+    </label>
+    <label> Фамилия:
+      <input type="text" name="secondName" formControlName="secondName"/>
+    </label>
+    <label> Отчество:
+      <input type="text" name="patronymic" formControlName="patronymic"/>
+    </label>
+  </div>
+  <label> Дата рождения:
+    <input type="text" name="age" formControlName="Age"/>
+  </label>
+  <label> Оценка:
+    <input type="text" name="mark" formControlName="Mark"/>
+  </label>
+  <div [ngClass]="{'EditStudentFormButtons': true}">
+    <input type="submit" value="Создать">
+    <button (click)="hideForm()">Отменить</button>
+  </div>
+</form>

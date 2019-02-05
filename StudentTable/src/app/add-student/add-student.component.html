@@ -1,12 +1,24 @@
-<form novalidate [formGroup]="newStudentForm" (ngSubmit)="onSubmit()">
+<form novalidate [ngClass]="{'AddStudentForm': true}" [formGroup]="newStudentForm" (ngSubmit)="onSubmit()">
   <label>Добавление студента</label>
   <div formGroupName="FIO">
-    <input type="text" name="name" formControlName="name"/>
-    <input type="text" name="secondName" formControlName="secondName"/>
-    <input type="text" name="patronymic" formControlName="patronymic"/>
+    <label> Имя:
+      <input type="text" name="name" formControlName="name"/>
+    </label>
+    <label> Фамилия:
+      <input type="text" name="secondName" formControlName="secondName"/>
+    </label>
+    <label> Отчество:
+      <input type="text" name="patronymic" formControlName="patronymic"/>
+    </label>
   </div>
-  <input type="text" name="age" formControlName="Age"/>
-  <input type="text" name="mark" formControlName="Mark"/>
-  <input type="submit" value="Создать">
-  <button (click)="hideForm()">Отменить</button>
+  <label> Дата рождения:
+    <input type="text" name="age" formControlName="Age"/>
+  </label>
+  <label> Оценка:
+    <input type="text" name="mark" formControlName="Mark"/>
+  </label>
+  <div [ngClass]="{'AddStudentFormButtons': true}">
+    <input type="submit" value="Создать">
+    <button (click)="hideForm()">Отменить</button>
+  </div>
 </form>

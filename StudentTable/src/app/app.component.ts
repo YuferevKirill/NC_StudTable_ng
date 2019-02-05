@@ -22,9 +22,12 @@ export class AppComponent {
   markForFilter = '';
   dateForFilter = '';
   AddedStudent: Student;
+  StudentToEdit: Student;
   isAddPopUpVisible: boolean;
+  isChangePopUpVisible: boolean;
 
   newStudent: Student;
+  private indexOfChangedStudent: number;
 
   highlighting(): void  {
     switch (this.highlightLowScore) {
@@ -152,5 +155,21 @@ export class AppComponent {
     console.log(student);
     this.students.push(student);
     this.isAddPopUpVisible = false;
+  }
+
+  ChangeStudent(student: Student): void {
+    this.isChangePopUpVisible = true;
+    this.StudentToEdit = student;
+    this.indexOfChangedStudent = this.students.indexOf(student);
+  }
+
+  HideChangePopUp() {
+    this.isChangePopUpVisible = false;
+    this.StudentToEdit = null;
+  }
+
+  EditStudent(editedStudent: Student) {
+    this.isChangePopUpVisible = false;
+    this.students[this.indexOfChangedStudent] = editedStudent;
   }
 }
