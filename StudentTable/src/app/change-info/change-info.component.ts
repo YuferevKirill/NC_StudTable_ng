@@ -26,12 +26,15 @@ export class ChangeInfoComponent implements OnInit {
   private formInit(): void {
     this.editStudentForm = new FormGroup({
       FIO: new FormGroup({
-        secondName: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
-        name: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
-        patronymic: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)])
+        secondName: new FormControl(this.studentToEdit.secondName,
+          [Validators.required, Validators.pattern(/[А-я]/)]),
+        name: new FormControl(this.studentToEdit.name,
+          [Validators.required, Validators.pattern(/[А-я]/)]),
+        patronymic: new FormControl(this.studentToEdit.patronymic,
+          [Validators.required, Validators.pattern(/[А-я]/)])
       }, [this.CheckName]),
-      age: new FormControl('', [Validators.required, this.CheckAge]),
-      mark: new FormControl('', [Validators.required, Validators.pattern(/[0-5]/),
+      age: new FormControl(this.studentToEdit.age, [Validators.required, this.CheckAge]),
+      mark: new FormControl(this.studentToEdit.mark, [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
         Validators.minLength(1)])
     });
@@ -39,6 +42,7 @@ export class ChangeInfoComponent implements OnInit {
 
   hideForm(): void {
     this.HideForm.emit('test');
+    console.log(this.studentToEdit);
   }
 
   onSubmit(): void {

@@ -9,14 +9,13 @@ import { PopupComponent } from './popup/popup.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { AddStudentComponent } from './add-student/add-student.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     StudentComponent,
     PopupComponent,
     ChangeInfoComponent,
-    AddStudentComponent
+    AddStudentComponent,
   ],
   imports: [
     BrowserModule,

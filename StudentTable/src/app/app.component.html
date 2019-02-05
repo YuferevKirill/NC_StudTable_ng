@@ -34,5 +34,5 @@
   <app-add-student [ngClass]="{'PopUp': true}" *ngIf="isAddPopUpVisible"
                    (HideForm)="hideAddPopup()" (addNewStudent)="addNewStudent($event)"></app-add-student>
   <app-change-info [ngClass]="{'PopUp': true}" *ngIf="isChangePopUpVisible" (HideForm)="HideChangePopUp()"
-                   (EditStudent)="EditStudent($event)"></app-change-info>
+                   (EditStudent)="EditStudent($event) " [studentToEdit]="studentToEdit"></app-change-info>
 </div>

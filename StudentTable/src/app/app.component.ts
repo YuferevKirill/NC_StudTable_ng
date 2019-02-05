@@ -22,7 +22,7 @@ export class AppComponent {
   markForFilter = '';
   dateForFilter = '';
   AddedStudent: Student;
-  StudentToEdit: Student;
+  studentToEdit: Student;
   isAddPopUpVisible: boolean;
   isChangePopUpVisible: boolean;
 
@@ -158,13 +158,13 @@ export class AppComponent {
 
   ChangeStudent(student: Student): void {
     this.isChangePopUpVisible = true;
-    this.StudentToEdit = student;
+    this.studentToEdit = student;
     this.indexOfChangedStudent = this.students.indexOf(student);
   }
 
   HideChangePopUp(): void {
     this.isChangePopUpVisible = false;
-    this.StudentToEdit = null;
+    this.studentToEdit = null;
   }
 
   EditStudent(editedStudent: Student): void {
