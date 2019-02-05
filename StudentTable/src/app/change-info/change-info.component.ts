@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../models/student.model';
 
 @Component({
@@ -9,29 +9,31 @@ import {Student} from '../models/student.model';
 })
 export class ChangeInfoComponent implements OnInit {
 
-  @Input() student: Student;
+  @Input() studentToEdit: Student;
   @Output() HideForm = new EventEmitter<string>();
   @Output() EditStudent = new EventEmitter<Student>();
 
   EditedStudent: Student;
-
   public editStudentForm: FormGroup;
 
-  constructor() { }
+  constructor() {
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formInit();
   }
 
   private formInit(): void {
     this.editStudentForm = new FormGroup({
       FIO: new FormGroup({
-        name: new FormControl(''),
-        secondName: new FormControl(''),
-        patronymic: new FormControl('', [Validators.required, Validators.minLength(5)])
-      }),
-      Age: new FormControl(''),
-      Mark: new FormControl('')
+        secondName: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
+        name: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
+        patronymic: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)])
+      }, [this.CheckName]),
+      age: new FormControl('', [Validators.required, this.CheckAge]),
+      mark: new FormControl('', [Validators.required, Validators.pattern(/[0-5]/),
+        Validators.maxLength(1),
+        Validators.minLength(1)])
     });
   }
 
@@ -39,15 +41,40 @@ export class ChangeInfoComponent implements OnInit {
     this.HideForm.emit('test');
   }
 
-  onSubmit() {
-    const formValue = this.editStudentForm.value;
-    this.EditedStudent = {
-      age: formValue.Age,
-      mark: formValue.Mark,
-      name: formValue.FIO.name,
-      patronymic: formValue.FIO.patronymic,
-      secondName: formValue.FIO.secondName
-    };
-    this.EditStudent.emit(this.EditedStudent);
+  onSubmit(): void {
+      const formValue = this.editStudentForm.value;
+      this.EditedStudent = {
+        age: formValue.age,
+        mark: formValue.mark,
+        name: formValue.FIO.name,
+        patronymic: formValue.FIO.patronymic,
+        secondName: formValue.FIO.secondName
+      };
+      this.EditStudent.emit(this.EditedStudent);
+  }
+
+  private CheckAge(control: FormControl): ValidationErrors {
+    const value = control.value.slice(-4);
+
+    const ageValid = ((2019 - +value) > 10);
+
+    if (!ageValid) {
+      return { invalidAge: 'Возраст не прошёл валидацию' };
+    }
+    return null;
+  }
+
+  private CheckName(control: FormControl): ValidationErrors {
+
+    const name = control.value['name'];
+    const secondName = control.value['secondName'];
+    const patronymic = control.value['patronymic'];
+
+    const nameValid = (name === secondName || name === patronymic || secondName === patronymic);
+
+    if (nameValid) {
+      return { invalidFields: 'Имя, фамилия или отчество совпадают' };
+    }
+    return null;
   }
 }

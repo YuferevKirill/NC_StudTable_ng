@@ -16,3 +16,7 @@
   display: flex;
   justify-content: space-around;
 }
+
+input.ng-touched.ng-invalid{
+  border-color: red;
+}

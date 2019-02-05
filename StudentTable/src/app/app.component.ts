@@ -29,7 +29,7 @@ export class AppComponent {
   newStudent: Student;
   private indexOfChangedStudent: number;
 
-  highlighting(): void  {
+  highlighting(): void {
     switch (this.highlightLowScore) {
       case false:
         this.highlightLowScore = true;
@@ -57,7 +57,7 @@ export class AppComponent {
     switch (selectedIndex) {
       case 1:
         this.students.sort(function (student1, student2) {
-          const secondNameA = student1.secondName.toLowerCase(), secondNameB = student2.secondName.toLowerCase()
+          const secondNameA = student1.secondName.toLowerCase(), secondNameB = student2.secondName.toLowerCase();
           if (secondNameA < secondNameB) {
             return -1;
           }
@@ -69,7 +69,7 @@ export class AppComponent {
         return;
       case 2:
         this.students.sort(function (student1, student2) {
-          const nameA = student1.name.toLowerCase(), nameB = student2.name.toLowerCase()
+          const nameA = student1.name.toLowerCase(), nameB = student2.name.toLowerCase();
           if (nameA < nameB) {
             return -1;
           }
@@ -81,7 +81,7 @@ export class AppComponent {
         return;
       case 3:
         this.students.sort(function (student1, student2) {
-          const patronymicA = student1.patronymic.toLowerCase(), patronymicB = student2.patronymic.toLowerCase()
+          const patronymicA = student1.patronymic.toLowerCase(), patronymicB = student2.patronymic.toLowerCase();
           if (patronymicA < patronymicB) {
             return -1;
           }
@@ -92,7 +92,7 @@ export class AppComponent {
         });
         return;
       case 4:
-        this.students.sort(function(a, b) {
+        this.students.sort(function (a, b) {
           const dateA = +a.age.slice(-4), dateB = +b.age.slice(-4);
           return dateA - dateB;
         });
@@ -121,7 +121,7 @@ export class AppComponent {
   }
 
   CheckFilterMark(student: Student): boolean {
-        return student.mark > +this.markForFilter;
+    return student.mark > +this.markForFilter;
   }
 
   CheckFilterDate(student: Student): boolean {
@@ -137,7 +137,7 @@ export class AppComponent {
       return this.CheckFilterMark(student);
     } else if (this.dateForFilter !== '') {
       return this.CheckFilterDate(student);
-    }  else {
+    } else {
       return true;
     }
   }
@@ -152,7 +152,6 @@ export class AppComponent {
   }
 
   addNewStudent(student: Student): void {
-    console.log(student);
     this.students.push(student);
     this.isAddPopUpVisible = false;
   }
@@ -163,12 +162,12 @@ export class AppComponent {
     this.indexOfChangedStudent = this.students.indexOf(student);
   }
 
-  HideChangePopUp() {
+  HideChangePopUp(): void {
     this.isChangePopUpVisible = false;
     this.StudentToEdit = null;
   }
 
-  EditStudent(editedStudent: Student) {
+  EditStudent(editedStudent: Student): void {
     this.isChangePopUpVisible = false;
     this.students[this.indexOfChangedStudent] = editedStudent;
   }
