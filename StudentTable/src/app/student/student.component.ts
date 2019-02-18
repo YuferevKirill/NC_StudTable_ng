@@ -5,7 +5,6 @@ import {Student} from '../models/student.model';
   selector: 'app-student',
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentComponent implements OnInit {
 

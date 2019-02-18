@@ -2,6 +2,7 @@ export interface Student {
    secondName: string;
    name: string;
    patronymic: string;
-   age: string;
+   dateOfBirth: string;
    mark: number;
+   objectId?: string;
 }

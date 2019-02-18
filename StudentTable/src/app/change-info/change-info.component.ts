@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../models/student.model';
+import {StudentService} from '../Services/Student/student.service';
 
 @Component({
   selector: 'app-change-info',
@@ -14,10 +15,9 @@ export class ChangeInfoComponent implements OnInit {
   @Output() HideForm = new EventEmitter<string>();
   @Output() EditStudent = new EventEmitter<Student>();
 
-  EditedStudent: Student;
   public editStudentForm: FormGroup;
 
-  constructor() {
+  constructor(private _StudentService: StudentService) {
   }
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class ChangeInfoComponent implements OnInit {
         patronymic: new FormControl(this.studentToEdit.patronymic,
           [Validators.required, Validators.pattern(/[А-я]/)])
       }, [this.CheckName]),
-      age: new FormControl(this.studentToEdit.age, [Validators.required, this.CheckAge]),
+      dateOfBirth: new FormControl(this.studentToEdit.dateOfBirth, [Validators.required, this.CheckAge]),
       mark: new FormControl(this.studentToEdit.mark, [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
         Validators.minLength(1)])
@@ -47,15 +47,16 @@ export class ChangeInfoComponent implements OnInit {
   }
 
   onSubmit(): void {
-      const formValue = this.editStudentForm.value;
-      this.EditedStudent = {
-        age: formValue.age,
-        mark: formValue.mark,
-        name: formValue.FIO.name,
-        patronymic: formValue.FIO.patronymic,
-        secondName: formValue.FIO.secondName
-      };
-      this.EditStudent.emit(this.EditedStudent);
+    const formValue = this.editStudentForm.value;
+
+    this.studentToEdit.secondName = formValue.FIO.secondName;
+    this.studentToEdit.name = formValue.FIO.name;
+    this.studentToEdit.patronymic = formValue.FIO.patronymic;
+    this.studentToEdit.dateOfBirth = formValue.dateOfBirth;
+    this.studentToEdit.mark = formValue.mark;
+
+    this._StudentService.editStudent(this.studentToEdit);
+    this.EditStudent.emit(this.studentToEdit);
   }
 
   private CheckAge(control: FormControl): ValidationErrors {

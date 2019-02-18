@@ -8,8 +8,16 @@ import { StudentComponent } from './student/student.component';
 import { PopupComponent } from './popup/popup.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { AddStudentComponent } from './add-student/add-student.component';
-import { HoverDirectiveDirective } from './hover-directive.directive';
-import { CustomPipePipe } from './custom-pipe.pipe';
+import {ConsoleLoggerService} from './Services/ConsoleLogger/console-logger.service';
+import {DivLoggerService} from './Services/DivLogger/div-logger.service';
+import {StudentService} from './Services/Student/student.service';
+import { ButtonHoverDirective } from './Directives/ButtonHover/button-hover.directive';
+import { AgeConverterPipe } from './Pipes/AgeConverter/age-converter.pipe';
+import { TableWorkComponent } from './table-work/table-work.component';
+import Backendless from 'backendless';
+import { environment } from '../environments/environment';
+Backendless.initApp(environment.backendless.APP_ID, environment.backendless.API_KEY);
+
 
 @NgModule({
   declarations: [
@@ -18,15 +26,20 @@ import { CustomPipePipe } from './custom-pipe.pipe';
     PopupComponent,
     ChangeInfoComponent,
     AddStudentComponent,
-    HoverDirectiveDirective,
-    CustomPipePipe,
+    ButtonHoverDirective,
+    AgeConverterPipe,
+    TableWorkComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    ConsoleLoggerService,
+    DivLoggerService,
+    StudentService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

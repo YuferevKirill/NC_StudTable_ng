@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Student} from '../models/student.model';
+import {StudentService} from '../Services/Student/student.service';
 
 @Component({
   selector: 'app-popup',
@@ -13,12 +14,13 @@ export class PopupComponent implements OnInit {
   @Output() hidePopup = new EventEmitter<void>();
   @Output() deleteRow = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private _StudentService: StudentService) { }
 
   ngOnInit(): void {
   }
 
   deleteStudent(): void {
+    this._StudentService.deleteStudent(this.student);
     this.deleteRow.emit();
     this.hide();
   }

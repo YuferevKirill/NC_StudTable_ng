@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormGroup, Validators, FormControl, ValidationErrors} from '@angular/forms';
 import {Student} from '../models/student.model';
+import {StudentService} from '../Services/Student/student.service';
 
 @Component({
   selector: 'app-add-student',
@@ -15,9 +16,9 @@ export class AddStudentComponent implements OnInit {
 
   newStudent: Student;
 
-  public newStudentForm: FormGroup;
+  private newStudentForm: FormGroup;
 
-  constructor() {
+  constructor(private _StudentService: StudentService) {
   }
 
   ngOnInit(): void {
@@ -31,7 +32,7 @@ export class AddStudentComponent implements OnInit {
         name: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
         patronymic: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)])
       }, [this.CheckName]),
-      age: new FormControl('', [Validators.required, this.CheckAge]),
+      dateOfBirth: new FormControl('', [Validators.required, this.CheckAge]),
       mark: new FormControl('', [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
         Validators.minLength(1)])
@@ -45,12 +46,13 @@ export class AddStudentComponent implements OnInit {
   onSubmit(): void {
     const formValue = this.newStudentForm.value;
     this.newStudent = {
-      age: formValue.age,
+      dateOfBirth: formValue.dateOfBirth,
       mark: formValue.mark,
       name: formValue.FIO.name,
       patronymic: formValue.FIO.patronymic,
       secondName: formValue.FIO.secondName
     };
+    this._StudentService.addStudent(this.newStudent);
     this.addNewStudent.emit(this.newStudent);
   }
 
