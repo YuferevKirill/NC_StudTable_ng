@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Student} from '../../models/student.model';
 import Backendless from 'backendless';
 
@@ -9,6 +9,8 @@ const studentStore = Backendless.Data.of('Student');
 })
 export class StudentService {
 
+  dbChanged = new EventEmitter();
+
   private students: Student[] = [];
 
   constructor() {
@@ -17,33 +19,9 @@ export class StudentService {
   public loadAll(): void {
     studentStore.find().then((students: Student[]) => {
       this.students = students;
-      this.addRealTimeListeners();
+      this.dbChanged.emit();
     }).catch(function (error) {
       console.log(error);
-    });
-  }
-
-  private addRealTimeListeners(): void {
-    const realTimeHandlers: Backendless.EventHandler = studentStore.rt();
-
-    realTimeHandlers.addCreateListener<Student>(this.onStudentAdd.bind(this));
-    realTimeHandlers.addUpdateListener<Student>(this.onStudentChange.bind(this));
-    realTimeHandlers.addDeleteListener<Student>(this.onStudentRemove.bind(this));
-  }
-
-  private onStudentAdd(newStudent: Student): void {
-    this.students.push(newStudent);
-  }
-
-  private onStudentChange(updatedStudent: Student): void {
-    this.students = this.students.map(person => {
-      return updatedStudent.objectId === person.objectId ? updatedStudent : person;
-    });
-  }
-
-  private onStudentRemove(oldStudent: Student): void {
-    this.students = this.students.filter(person => {
-      return oldStudent.objectId !== person.objectId;
     });
   }
 
@@ -52,20 +30,30 @@ export class StudentService {
   }
 
   public addStudent (newStudent: Student): void {
-    studentStore.save(newStudent).catch(function (error) {
-      console.log(error);
-    });
+    studentStore.save(newStudent)
+      .then(() => {
+        this.loadAll();
+        this.dbChanged.emit(); })
+      .catch((error) => {console.log(error); });
   }
 
   public deleteStudent(studentToDelete: Student): void {
-    studentStore.remove(studentToDelete.objectId).catch( function (error) {
-      console.log(error);
-    });
+    studentStore.remove(studentToDelete.objectId)
+      .then(() => {
+        this.students = this.students.filter(person => {
+          return studentToDelete.objectId !== person.objectId;
+        });
+        this.dbChanged.emit(); })
+      .catch( (error) => {console.log(error); });
   }
 
   public editStudent(studentToEdit: Student): void {
-    studentStore.save(studentToEdit).catch(function (error) {
-      console.log(error);
-    });
+    studentStore.save(studentToEdit)
+      .then(() => {
+        this.students = this.students.map(person => {
+          return studentToEdit.objectId === person.objectId ? studentToEdit : person;
+        });
+        this.dbChanged.emit(); })
+      .catch((error) => {console.log(error); });
   }
 }

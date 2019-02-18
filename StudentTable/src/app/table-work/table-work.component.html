@@ -30,10 +30,9 @@
     <button (click)="showAddPopup()" appButtonHover>Добавить студента</button>
   </div>
   <app-popup [ngClass]="{'PopUp': true}" *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent"
-             (hidePopup)="hidePopup()" (deleteRow)="deleteRow()"></app-popup>
+             (hidePopup)="hidePopup()"></app-popup>
   <app-add-student [ngClass]="{'PopUp': true}" *ngIf="isAddPopUpVisible"
-                   (HideForm)="hideAddPopup()" (addNewStudent)="addNewStudent($event)"></app-add-student>
+                   (HideForm)="hideAddPopup()" (addNewStudent)="addNewStudent()"></app-add-student>
   <app-change-info [ngClass]="{'PopUp': true}" *ngIf="isChangePopUpVisible" (HideForm)="HideChangePopUp()"
-                   (EditStudent)="EditStudent($event) " [studentToEdit]="studentToEdit"></app-change-info>
-  <button (click)="clickblead()">Люди в консоль</button>
+                   (EditStudent)="EditStudent() " [studentToEdit]="studentToEdit"></app-change-info>
 </div>

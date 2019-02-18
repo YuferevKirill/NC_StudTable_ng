@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormGroup, Validators, FormControl, ValidationErrors} from '@angular/forms';
 import {Student} from '../models/student.model';
 import {StudentService} from '../Services/Student/student.service';
@@ -7,7 +7,6 @@ import {StudentService} from '../Services/Student/student.service';
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styleUrls: ['./add-student.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddStudentComponent implements OnInit {
 
@@ -53,7 +52,7 @@ export class AddStudentComponent implements OnInit {
       secondName: formValue.FIO.secondName
     };
     this._StudentService.addStudent(this.newStudent);
-    this.addNewStudent.emit(this.newStudent);
+    this.addNewStudent.emit();
   }
 
   private CheckAge(control: FormControl): ValidationErrors {

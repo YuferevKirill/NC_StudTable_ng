@@ -56,7 +56,7 @@ export class ChangeInfoComponent implements OnInit {
     this.studentToEdit.mark = formValue.mark;
 
     this._StudentService.editStudent(this.studentToEdit);
-    this.EditStudent.emit(this.studentToEdit);
+    this.EditStudent.emit();
   }
 
   private CheckAge(control: FormControl): ValidationErrors {

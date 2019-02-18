@@ -21,14 +21,17 @@ export class TableWorkComponent implements OnInit {
   isAddPopUpVisible: boolean;
   isChangePopUpVisible: boolean;
 
-  private indexOfChangedStudent: number;
-
   // TODO подумать над укорачиванием
-  constructor(private _StudentService: StudentService) {
+  constructor(private _StudentService: StudentService, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this._StudentService.loadAll();
+    this._StudentService.dbChanged.subscribe(
+      () => {
+        this.cd.detectChanges();
+      }
+    );
   }
 
   get students(): Student[] {
@@ -111,11 +114,6 @@ export class TableWorkComponent implements OnInit {
     }
   }
 
-  deleteRow(): void {
-    const indexToRemove = this.students.findIndex(obj => obj === this.isDeleteStudent);
-    this.students.splice(indexToRemove, 1);
-  }
-
   showPopup(student: Student): void {
     this.isDeletePopUpVisible = true;
     this.isDeleteStudent = student;
@@ -157,15 +155,13 @@ export class TableWorkComponent implements OnInit {
     this.AddedStudent = null;
   }
 
-  addNewStudent(student: Student): void {
-    this._StudentService.loadAll();
+  addNewStudent(): void {
     this.isAddPopUpVisible = false;
   }
 
   ChangeStudent(student: Student): void {
     this.isChangePopUpVisible = true;
     this.studentToEdit = student;
-    this.indexOfChangedStudent = this.students.indexOf(student);
   }
 
   HideChangePopUp(): void {
@@ -173,12 +169,7 @@ export class TableWorkComponent implements OnInit {
     this.studentToEdit = null;
   }
 
-  EditStudent(editedStudent: Student): void {
+  EditStudent(): void {
     this.isChangePopUpVisible = false;
-    //this.students[this.indexOfChangedStudent] = editedStudent;
-  }
-
-  clickblead(): void {
-    console.log(this.students);
   }
 }
