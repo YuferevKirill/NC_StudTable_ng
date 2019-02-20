@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Student} from '../models/student.model';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-student',
@@ -11,18 +12,32 @@ export class StudentComponent implements OnInit {
   @Input() student: Student;
   @Input() index: number;
   @Output() showPopup = new EventEmitter<Student>();
-  @Output() ChangeStudent = new EventEmitter<Student>();
 
-  constructor() { }
+  constructor(private _router: Router) {
+  }
 
   ngOnInit(): void {
   }
 
   onDelete(): void {
+    // this._router.navigate(['/delete', this.student.secondName]);
+
     this.showPopup.emit(this.student);
   }
 
   onChange() {
-    this.ChangeStudent.emit(this.student);
+    this._router.navigate(
+      ['/edit', this.student.secondName]
+      // {
+      //   queryParams:{
+      //     'name': this.student.name,
+      //     'secondName': this.student.secondName,
+      //     'patronymic': this.student.patronymic,
+      //     'mark':this.student.mark,
+      //     'dateOfBirth': this.student.dateOfBirth,
+      //     'objectId': this.student.objectId
+      //   }
+      // }
+    );
   }
 }

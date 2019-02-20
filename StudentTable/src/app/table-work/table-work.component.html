@@ -1,9 +1,10 @@
 <div>
   <div [ngClass]="{'Table': true}">
     <ng-container *ngFor="let student of students let i=index">
-      <app-student [ngClass]="{'RowTable': true, 'highlightClass': checkFunc(student), 'FindingUser': FindUser(student)}"
-                   *ngIf="CheckFilter(student)"
-                   [student]="student" [index]="i + 1" (showPopup)="showPopup(student)" (ChangeStudent)="ChangeStudent($event)">
+      <app-student
+        [ngClass]="{'RowTable': true, 'highlightClass': checkFunc(student), 'FindingUser': FindUser(student)}"
+        *ngIf="CheckFilter(student)"
+        [student]="student" [index]="i + 1" (showPopup)="showPopup(student)">
       </app-student>
     </ng-container>
   </div>
@@ -24,15 +25,20 @@
     </select>
   </div>
   <label [ngClass]="{'Field': true}">Фильтрация:</label>
-  <input [ngClass]="{'FilterFields': true}" #FieldForMark placeholder="Введите оценку" (input)="markForFilter = FieldForMark.value" type="text">
-  <input [ngClass]="{'FilterFields': true}" #FieldForYear placeholder="Введите год" (input)="dateForFilter = FieldForYear.value" type="text">
+  <input [ngClass]="{'FilterFields': true}" #FieldForMark placeholder="Введите оценку"
+         (input)="markForFilter = FieldForMark.value" type="text">
+  <input [ngClass]="{'FilterFields': true}" #FieldForYear placeholder="Введите год"
+         (input)="dateForFilter = FieldForYear.value" type="text">
   <div>
     <button (click)="showAddPopup()" appButtonHover>Добавить студента</button>
   </div>
-  <app-popup [ngClass]="{'PopUp': true}" *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent"
-             (hidePopup)="hidePopup()"></app-popup>
-  <app-add-student [ngClass]="{'PopUp': true}" *ngIf="isAddPopUpVisible"
-                   (HideForm)="hideAddPopup()" (addNewStudent)="addNewStudent()"></app-add-student>
-  <app-change-info [ngClass]="{'PopUp': true}" *ngIf="isChangePopUpVisible" (HideForm)="HideChangePopUp()"
-                   (EditStudent)="EditStudent() " [studentToEdit]="studentToEdit"></app-change-info>
+  <div> Логи:
+    <div>
+      <ng-container *ngFor="let log of logs">
+        {{log}}
+      </ng-container>
+    </div>
+  </div>
+  <app-popup *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent" (hidePopup)="hidePopup()"></app-popup>
 </div>
+<router-outlet></router-outlet>

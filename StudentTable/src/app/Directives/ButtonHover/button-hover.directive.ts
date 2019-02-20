@@ -5,7 +5,8 @@ import {Directive, HostBinding, HostListener} from '@angular/core';
 })
 export class ButtonHoverDirective {
 
-  constructor() { }
+  constructor() {
+  }
 
   @HostBinding('class.hovered') isHovered = false;
 

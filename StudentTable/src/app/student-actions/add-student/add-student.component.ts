@@ -1,7 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, Validators, FormControl, ValidationErrors} from '@angular/forms';
-import {Student} from '../models/student.model';
-import {StudentService} from '../Services/Student/student.service';
+import {Student} from '../../models/student.model';
+import {BackenldessService} from "../../global-services/Backendless/backenldess.service";
+import {ConsoleLoggerService} from "../../global-services/ConsoleLogger/console-logger.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-student',
@@ -10,14 +12,12 @@ import {StudentService} from '../Services/Student/student.service';
 })
 export class AddStudentComponent implements OnInit {
 
-  @Output() addNewStudent = new EventEmitter<Student>();
-  @Output() HideForm = new EventEmitter<void>();
-
-  newStudent: Student;
-
+  private newStudent: Student;
   private newStudentForm: FormGroup;
 
-  constructor(private _StudentService: StudentService) {
+  constructor(private _StudentService: BackenldessService,
+              private  _ConsoleLoggerService: ConsoleLoggerService,
+              private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class AddStudentComponent implements OnInit {
   }
 
   hideForm(): void {
-    this.HideForm.emit();
+    this._router.navigateByUrl('/');
   }
 
   onSubmit(): void {
@@ -52,7 +52,8 @@ export class AddStudentComponent implements OnInit {
       secondName: formValue.FIO.secondName
     };
     this._StudentService.addStudent(this.newStudent);
-    this.addNewStudent.emit();
+    this._ConsoleLoggerService.consoleLog('Студент добавлен', this.newStudent.secondName);
+    this._router.navigateByUrl('/');
   }
 
   private CheckAge(control: FormControl): ValidationErrors {
@@ -61,7 +62,7 @@ export class AddStudentComponent implements OnInit {
     const ageValid = ((2019 - +value) > 10);
 
     if (!ageValid) {
-      return { invalidAge: 'Возраст не прошёл валидацию' };
+      return {invalidAge: 'Возраст не прошёл валидацию'};
     }
     return null;
   }
@@ -75,7 +76,7 @@ export class AddStudentComponent implements OnInit {
     const nameValid = (name === secondName || name === patronymic || secondName === patronymic);
 
     if (nameValid) {
-      return { invalidFields: 'Имя, фамилия или отчество совпадают' };
+      return {invalidFields: 'Имя, фамилия или отчество совпадают'};
     }
     return null;
   }

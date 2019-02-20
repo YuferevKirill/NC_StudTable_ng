@@ -1,6 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Student} from '../models/student.model';
-import {StudentService} from '../Services/Student/student.service';
+import {BackenldessService} from "../global-services/Backendless/backenldess.service";
+import {ConsoleLoggerService} from "../global-services/ConsoleLogger/console-logger.service";
+import {Router} from "@angular/router";
+import {DivLoggerService} from "../global-services/DivLogger/div-logger.service";
 
 @Component({
   selector: 'app-table-work',
@@ -10,23 +13,24 @@ import {StudentService} from '../Services/Student/student.service';
 
 export class TableWorkComponent implements OnInit {
   UserForFind = '';
+  markForFilter = '';
+  dateForFilter = '';
   TextButton = 'Выделить двоечников';
   highlightLowScore = false;
   isDeletePopUpVisible: boolean;
   isDeleteStudent: Student;
-  markForFilter = '';
-  dateForFilter = '';
-  AddedStudent: Student;
-  studentToEdit: Student;
-  isAddPopUpVisible: boolean;
-  isChangePopUpVisible: boolean;
+
 
   // TODO подумать над укорачиванием
-  constructor(private _StudentService: StudentService, private cd: ChangeDetectorRef) {
+  constructor(private _StudentService: BackenldessService,
+              private cd: ChangeDetectorRef,
+              private _ConsoleLoggerService: ConsoleLoggerService,
+              private _DivLoggerService: DivLoggerService,
+              private _router: Router) {
+    this._StudentService.loadAll();
   }
 
   ngOnInit() {
-    this._StudentService.loadAll();
     this._StudentService.dbChanged.subscribe(
       () => {
         this.cd.detectChanges();
@@ -38,15 +42,21 @@ export class TableWorkComponent implements OnInit {
     return this._StudentService.getStudents();
   }
 
+  get logs(): string[] {
+    return this._DivLoggerService.getLogsToDiv();
+  }
+
   highlighting(): void {
     switch (this.highlightLowScore) {
       case false:
         this.highlightLowScore = true;
         this.TextButton = 'Снять выделение';
+        this._DivLoggerService.log('Двоечники выделены')
         return;
       case true:
         this.highlightLowScore = false;
         this.TextButton = 'Выделить двоечников';
+        this._ConsoleLoggerService.consoleLog('Выделение двоечников снято')
         return;
     }
   }
@@ -75,6 +85,7 @@ export class TableWorkComponent implements OnInit {
           }
           return 0;
         });
+        this._ConsoleLoggerService.consoleLog('Сортировка по фамилии');
         return;
       case 2:
         this.students.sort(function (student1, student2) {
@@ -87,6 +98,7 @@ export class TableWorkComponent implements OnInit {
           }
           return 0;
         });
+        this._ConsoleLoggerService.consoleLog('Сортировка по имени');
         return;
       case 3:
         this.students.sort(function (student1, student2) {
@@ -99,17 +111,20 @@ export class TableWorkComponent implements OnInit {
           }
           return 0;
         });
+        this._ConsoleLoggerService.consoleLog('Сортировка по отчеству');
         return;
       case 4:
         this.students.sort(function (a, b) {
           const dateA = +a.dateOfBirth.slice(-4), dateB = +b.dateOfBirth.slice(-4);
           return dateA - dateB;
         });
+        this._ConsoleLoggerService.consoleLog('Сортировка по возрасту');
         return;
       case 5:
         this.students.sort(function (student1, student2) {
           return +student1.mark - +student2.mark;
         });
+        this._ConsoleLoggerService.consoleLog('Сортировка по оценке');
         return;
     }
   }
@@ -125,12 +140,12 @@ export class TableWorkComponent implements OnInit {
   }
 
   CheckFilterMark(student: Student): boolean {
-    return +student.mark > +this.markForFilter;
+    return +student.mark >= +this.markForFilter;
   }
 
   CheckFilterDate(student: Student): boolean {
     const date = new Date(student.dateOfBirth.split('.').reverse().join('-'));
-    return date > new Date(this.dateForFilter.split('.').reverse().join('-'));
+    return date >= new Date(this.dateForFilter.split('.').reverse().join('-'));
   }
 
   CheckFilter(student: Student): boolean {
@@ -147,29 +162,6 @@ export class TableWorkComponent implements OnInit {
   }
 
   showAddPopup(): void {
-    this.isAddPopUpVisible = true;
-  }
-
-  hideAddPopup(): void {
-    this.isAddPopUpVisible = false;
-    this.AddedStudent = null;
-  }
-
-  addNewStudent(): void {
-    this.isAddPopUpVisible = false;
-  }
-
-  ChangeStudent(student: Student): void {
-    this.isChangePopUpVisible = true;
-    this.studentToEdit = student;
-  }
-
-  HideChangePopUp(): void {
-    this.isChangePopUpVisible = false;
-    this.studentToEdit = null;
-  }
-
-  EditStudent(): void {
-    this.isChangePopUpVisible = false;
+    this._router.navigateByUrl('add');
   }
 }
