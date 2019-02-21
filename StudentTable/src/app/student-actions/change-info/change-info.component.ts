@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../../models/student.model';
 import {BackenldessService} from "../../global-services/Backendless/backenldess.service";
-import {ConsoleLoggerService} from "../../global-services/ConsoleLogger/console-logger.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {LoggerService} from "../../global-services/Logger/logger.service";
 
 @Component({
   selector: 'app-change-info',
@@ -16,7 +16,7 @@ export class ChangeInfoComponent implements OnInit {
   private studentToEdit;
 
   constructor(private _StudentService: BackenldessService,
-              private _ConsoleLoggerService: ConsoleLoggerService,
+              private _logger: LoggerService,
               private _router: Router,
               private _route: ActivatedRoute) {
     this._route.params.subscribe(params => this.studentToEdit = this._StudentService.getStudentBySecondName(params.secondName));
@@ -60,7 +60,7 @@ export class ChangeInfoComponent implements OnInit {
     };
 
     this._StudentService.editStudent(editedStud);
-    this._ConsoleLoggerService.consoleLog('Студент изменён', editedStud.secondName);
+    this._logger.log('Студент изменён', editedStud.secondName);
     this._router.navigateByUrl('/');
   }
 

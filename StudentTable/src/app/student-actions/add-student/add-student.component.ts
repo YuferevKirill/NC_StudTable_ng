@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, Validators, FormControl, ValidationErrors} from '@angular/forms';
 import {Student} from '../../models/student.model';
 import {BackenldessService} from "../../global-services/Backendless/backenldess.service";
-import {ConsoleLoggerService} from "../../global-services/ConsoleLogger/console-logger.service";
 import {Router} from "@angular/router";
+import {LoggerService} from "../../global-services/Logger/logger.service";
 
 @Component({
   selector: 'app-add-student',
@@ -16,7 +16,7 @@ export class AddStudentComponent implements OnInit {
   private newStudentForm: FormGroup;
 
   constructor(private _StudentService: BackenldessService,
-              private  _ConsoleLoggerService: ConsoleLoggerService,
+              private _logger: LoggerService,
               private _router: Router) {
   }
 
@@ -52,7 +52,7 @@ export class AddStudentComponent implements OnInit {
       secondName: formValue.FIO.secondName
     };
     this._StudentService.addStudent(this.newStudent);
-    this._ConsoleLoggerService.consoleLog('Студент добавлен', this.newStudent.secondName);
+    this._logger.log('Студент добавлен', this.newStudent.secondName);
     this._router.navigateByUrl('/');
   }
 

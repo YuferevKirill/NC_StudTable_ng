@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Student} from '../models/student.model';
 import {BackenldessService} from "../global-services/Backendless/backenldess.service";
-import {ConsoleLoggerService} from "../global-services/ConsoleLogger/console-logger.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {LoggerService} from "../global-services/Logger/logger.service";
 
 @Component({
   selector: 'app-popup',
@@ -15,7 +14,7 @@ export class PopupComponent implements OnInit {
   @Output() hidePopup = new EventEmitter<void>();
 
   constructor(private _StudentService: BackenldessService,
-              private _ConsoleLoggerService: ConsoleLoggerService) {
+              private _logger: LoggerService) {
   }
 
   ngOnInit(): void {
@@ -24,7 +23,7 @@ export class PopupComponent implements OnInit {
   deleteStudent(): void {
     this._StudentService.deleteStudent(this.student);
     this.hide();
-    this._ConsoleLoggerService.consoleLog('Студент удалён', this.student.secondName);
+    this._logger.log('Студент удалён', this.student.secondName);
   }
 
   hide(): void {

@@ -32,13 +32,11 @@
   <div>
     <button (click)="showAddPopup()" appButtonHover>Добавить студента</button>
   </div>
-  <div> Логи:
-    <div>
-      <ng-container *ngFor="let log of logs">
-        {{log}}
-      </ng-container>
+    <div *ngIf="isLogDivVisible"> Логи:
+      <div [ngClass]="{'logsDiv': true}">
+        <div *ngFor="let log of logs" >{{log}}</div>
+      </div>
     </div>
-  </div>
   <app-popup *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent" (hidePopup)="hidePopup()"></app-popup>
 </div>
 <router-outlet></router-outlet>

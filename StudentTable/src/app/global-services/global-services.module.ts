@@ -16,13 +16,16 @@ import {LoggerService} from "./Logger/logger.service";
     BackenldessService,
     {provide: LoggerService, deps: [ConsoleLoggerService, DivLoggerService],
     useFactory: (ConsoleLoggerService, DivLoggerService)=>{
-      let service = new LoggerService();
-      if (service.route === 'consoleMode')
-        return ConsoleLoggerService;
-      else if (service.route === 'divMode')
-        return DivLoggerService;
-    }},
+      let loggerService = new LoggerService();
+      if (loggerService.getLogMode() === 'consoleMode')
+        loggerService.setLogFunction(ConsoleLoggerService.consoleLog);
+      else if (loggerService.getLogMode() === 'divMode'){
+        loggerService.setLogFunction(DivLoggerService.log);
+      }
+      return loggerService;
+    }}
   ]
 })
+
 export class GlobalServicesModule {
 }

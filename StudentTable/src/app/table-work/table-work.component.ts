@@ -1,9 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Student} from '../models/student.model';
 import {BackenldessService} from "../global-services/Backendless/backenldess.service";
-import {ConsoleLoggerService} from "../global-services/ConsoleLogger/console-logger.service";
 import {Router} from "@angular/router";
-import {DivLoggerService} from "../global-services/DivLogger/div-logger.service";
+import {LoggerService} from "../global-services/Logger/logger.service";
 
 @Component({
   selector: 'app-table-work',
@@ -19,13 +18,12 @@ export class TableWorkComponent implements OnInit {
   highlightLowScore = false;
   isDeletePopUpVisible: boolean;
   isDeleteStudent: Student;
-
+  isLogDivVisible: boolean;
 
   // TODO подумать над укорачиванием
   constructor(private _StudentService: BackenldessService,
               private cd: ChangeDetectorRef,
-              private _ConsoleLoggerService: ConsoleLoggerService,
-              private _DivLoggerService: DivLoggerService,
+              private _logger: LoggerService,
               private _router: Router) {
     this._StudentService.loadAll();
   }
@@ -36,6 +34,7 @@ export class TableWorkComponent implements OnInit {
         this.cd.detectChanges();
       }
     );
+    this.isLogDivVisible = this._logger.getLogMode() === 'divMode';
   }
 
   get students(): Student[] {
@@ -43,7 +42,7 @@ export class TableWorkComponent implements OnInit {
   }
 
   get logs(): string[] {
-    return this._DivLoggerService.getLogsToDiv();
+    return this._logger.getLogsToDiv();
   }
 
   highlighting(): void {
@@ -51,12 +50,12 @@ export class TableWorkComponent implements OnInit {
       case false:
         this.highlightLowScore = true;
         this.TextButton = 'Снять выделение';
-        this._DivLoggerService.log('Двоечники выделены')
+        this._logger.log('Двоечники выделены')
         return;
       case true:
         this.highlightLowScore = false;
         this.TextButton = 'Выделить двоечников';
-        this._ConsoleLoggerService.consoleLog('Выделение двоечников снято')
+        this._logger.log('Выделение двоечников снято')
         return;
     }
   }
@@ -85,7 +84,7 @@ export class TableWorkComponent implements OnInit {
           }
           return 0;
         });
-        this._ConsoleLoggerService.consoleLog('Сортировка по фамилии');
+        this._logger.log('Сортировка по фамилии');
         return;
       case 2:
         this.students.sort(function (student1, student2) {
@@ -98,7 +97,7 @@ export class TableWorkComponent implements OnInit {
           }
           return 0;
         });
-        this._ConsoleLoggerService.consoleLog('Сортировка по имени');
+        this._logger.log('Сортировка по имени');
         return;
       case 3:
         this.students.sort(function (student1, student2) {
@@ -111,20 +110,20 @@ export class TableWorkComponent implements OnInit {
           }
           return 0;
         });
-        this._ConsoleLoggerService.consoleLog('Сортировка по отчеству');
+        this._logger.log('Сортировка по отчеству');
         return;
       case 4:
         this.students.sort(function (a, b) {
           const dateA = +a.dateOfBirth.slice(-4), dateB = +b.dateOfBirth.slice(-4);
           return dateA - dateB;
         });
-        this._ConsoleLoggerService.consoleLog('Сортировка по возрасту');
+        this._logger.log('Сортировка по возрасту');
         return;
       case 5:
         this.students.sort(function (student1, student2) {
           return +student1.mark - +student2.mark;
         });
-        this._ConsoleLoggerService.consoleLog('Сортировка по оценке');
+        this._logger.log('Сортировка по оценке');
         return;
     }
   }
