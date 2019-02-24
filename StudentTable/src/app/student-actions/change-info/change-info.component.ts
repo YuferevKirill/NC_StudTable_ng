@@ -88,4 +88,9 @@ export class ChangeInfoComponent implements OnInit {
     }
     return null;
   }
+
+  private isControlInvalid(controlName: string): boolean {
+    const control = this.editStudentForm.get(controlName);
+    return control.invalid && control.touched;
+  }
 }

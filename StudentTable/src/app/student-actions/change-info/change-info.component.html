@@ -22,5 +22,8 @@
       <input type="submit" value="Изменить" [disabled]="editStudentForm.invalid">
       <button type="button" (click)="hideForm()">Отменить</button>
     </div>
+    <div *ngIf="editStudentForm.get('FIO').hasError('invalidFields')">Фамилия, имя и отчество не должны совпадать!</div>
+    <div *ngIf="isControlInvalid('dateOfBirth')">Вам меньше 10 лет!</div>
+    <div *ngIf="isControlInvalid('mark')">Оценка должна быть 0-5</div>
   </form>
 </div>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, Validators, FormControl, ValidationErrors} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../../models/student.model';
 import {BackenldessService} from "../../global-services/Backendless/backenldess.service";
 import {Router} from "@angular/router";
@@ -13,7 +13,7 @@ import {LoggerService} from "../../global-services/Logger/logger.service";
 export class AddStudentComponent implements OnInit {
 
   private newStudent: Student;
-  private newStudentForm: FormGroup;
+  public newStudentForm: FormGroup;
 
   constructor(private _StudentService: BackenldessService,
               private _logger: LoggerService,
@@ -73,11 +73,16 @@ export class AddStudentComponent implements OnInit {
     const secondName = control.value['secondName'];
     const patronymic = control.value['patronymic'];
 
-    const nameValid = (name === secondName || name === patronymic || secondName === patronymic);
+    const nameValid = ((name === secondName && name !== '') || (name === patronymic && patronymic !== '') || (secondName === patronymic && secondName !== '' ));
 
     if (nameValid) {
       return {invalidFields: 'Имя, фамилия или отчество совпадают'};
     }
     return null;
+  }
+
+  private isControlInvalid(controlName: string): boolean {
+    const control = this.newStudentForm.get(controlName);
+    return control.invalid && control.touched;
   }
 }

@@ -3,24 +3,27 @@
     <label>Добавление студента</label>
     <div formGroupName="FIO">
       <label> Фамилия:
-        <input type="text" name="secondName" formControlName="secondName"/>
+        <input type="text" name="secondName" formControlName="secondName" placeholder="Иванов"/>
       </label>
       <label> Имя:
-        <input type="text" name="name" formControlName="name"/>
+        <input type="text" name="name" formControlName="name" placeholder="Иван"/>
       </label>
       <label> Отчество:
-        <input type="text" name="patronymic" formControlName="patronymic"/>
+        <input type="text" name="patronymic" formControlName="patronymic" placeholder="Иванович"/>
       </label>
     </div>
     <label> Дата рождения:
-      <input type="text" name="dateOfBirth" formControlName="dateOfBirth"/>
+      <input type="text" name="dateOfBirth" formControlName="dateOfBirth" placeholder="ДД.ММ.ГГГГ"/>
     </label>
     <label> Оценка:
-      <input type="text" name="mark" formControlName="mark"/>
+      <input type="text" name="mark" formControlName="mark" placeholder="0-5"/>
     </label>
     <div [ngClass]="{'AddStudentFormButtons': true}">
       <input type="submit" value="Создать" [disabled]="newStudentForm.invalid">
       <button type="button" (click)="hideForm()">Отменить</button>
     </div>
+    <div *ngIf="newStudentForm.get('FIO').hasError('invalidFields')">Фамилия, имя и отчество не должны совпадать!</div>
+    <div *ngIf="isControlInvalid('dateOfBirth')">Вам меньше 10 лет!</div>
+    <div *ngIf="isControlInvalid('mark')">Оценка должна быть 0-5</div>
   </form>
 </div>
