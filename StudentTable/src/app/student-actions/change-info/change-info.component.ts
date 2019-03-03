@@ -15,11 +15,11 @@ export class ChangeInfoComponent implements OnInit {
   public editStudentForm: FormGroup;
   private studentToEdit;
 
-  constructor(private _StudentService: BackenldessService,
-              private _logger: LoggerService,
-              private _router: Router,
-              private _route: ActivatedRoute) {
-    this._route.params.subscribe(params => this.studentToEdit = this._StudentService.getStudentBySecondName(params.secondName));
+  constructor(private backenldessService: BackenldessService,
+              private logger: LoggerService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe(params => this.studentToEdit = this.backenldessService.getStudentBySecondName(params.secondName));
   }
 
   ngOnInit(): void {
@@ -35,19 +35,19 @@ export class ChangeInfoComponent implements OnInit {
           [Validators.required, Validators.pattern(/[А-я]/)]),
         patronymic: new FormControl(this.studentToEdit.patronymic,
           [Validators.required, Validators.pattern(/[А-я]/)])
-      }, [this.CheckName]),
-      dateOfBirth: new FormControl(this.studentToEdit.dateOfBirth, [Validators.required, this.CheckAge]),
+      }, [this.checkName]),
+      dateOfBirth: new FormControl(this.studentToEdit.dateOfBirth, [Validators.required, this.checkAge]),
       mark: new FormControl(this.studentToEdit.mark, [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
         Validators.minLength(1)])
     });
   }
 
-  hideForm(): void {
-    this._router.navigateByUrl('/');
+  private hideForm(): void {
+    this.router.navigateByUrl('/');
   }
 
-  onSubmit(): void {
+  private onSubmit(): void {
     const formValue = this.editStudentForm.value;
 
     const editedStud: Student = {
@@ -59,12 +59,12 @@ export class ChangeInfoComponent implements OnInit {
       objectId: this.studentToEdit.objectId
     };
 
-    this._StudentService.editStudent(editedStud);
-    this._logger.log('Студент изменён', editedStud.secondName);
-    this._router.navigateByUrl('/');
+    this.backenldessService.editStudent(editedStud);
+    this.logger.log('Студент изменён', editedStud.secondName);
+    this.router.navigateByUrl('/');
   }
 
-  private CheckAge(control: FormControl): ValidationErrors {
+  private checkAge(control: FormControl): ValidationErrors {
     const value = control.value.slice(-4);
 
     const ageValid = ((2019 - +value) > 10);
@@ -75,7 +75,7 @@ export class ChangeInfoComponent implements OnInit {
     return null;
   }
 
-  private CheckName(control: FormControl): ValidationErrors {
+  private checkName(control: FormControl): ValidationErrors {
 
     const name = control.value['name'];
     const secondName = control.value['secondName'];

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Student} from '../models/student.model';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-student',
@@ -13,20 +13,19 @@ export class StudentComponent implements OnInit {
   @Input() index: number;
   @Output() showPopup = new EventEmitter<Student>();
 
-  constructor(private _router: Router) {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
   }
 
-  onDelete(): void {
-    // this._router.navigate(['/delete', this.student.secondName]);
-
+  private onDelete(): void {
+    // this.router.navigate(['/delete', this.student.secondName]);
     this.showPopup.emit(this.student);
   }
 
-  onChange() {
-    this._router.navigate(
+  private onChange(): void {
+    this.router.navigate(
       ['/edit', this.student.secondName]
       // {
       //   queryParams:{

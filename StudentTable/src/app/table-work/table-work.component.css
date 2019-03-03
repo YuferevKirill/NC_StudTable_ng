@@ -60,7 +60,7 @@ header {
   background-color: #ffffff;
 }
 
-.studentsTable :nth-child(odd){
+.studentsTable :nth-child(odd) {
   background-color: #F5F5F5;
 }
 
@@ -132,11 +132,11 @@ header {
   background: red !important;
 }
 
-.FindingUser {
+.findingUser {
   background: aquamarine !important;
 }
 
-.FilterFields {
+.filterFields {
   margin: 5px;
 }
 

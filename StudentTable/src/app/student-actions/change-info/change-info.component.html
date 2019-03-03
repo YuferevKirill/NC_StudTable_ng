@@ -1,5 +1,5 @@
-<div [ngClass]="{'PopUp': true}">
-  <form novalidate [ngClass]="{'EditStudentForm': true}" [formGroup]="editStudentForm" (ngSubmit)="onSubmit()">
+<div [ngClass]="{'popUp': true}">
+  <form novalidate [ngClass]="{'editStudentForm': true}" [formGroup]="editStudentForm" (ngSubmit)="onSubmit()">
 
     <p [ngClass]="{'headOfForm': true}">Изменение студента</p>
 
@@ -23,7 +23,7 @@
       </label>
     </div>
 
-    <div [ngClass]="{'EditStudentFormButtons': true}">
+    <div [ngClass]="{'editStudentFormButtons': true}">
       <input type="submit" value="Изменить" [disabled]="editStudentForm.invalid">
       <input type="button" (click)="hideForm()" value="Отменить"/>
     </div>

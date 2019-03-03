@@ -1,7 +1,7 @@
 <header [ngClass]="{'header': true}">
   <button (click)="showAddPopup()" appButtonHover>Добавить студента</button>
-  <button (click)="highlighting()" appButtonHover>{{TextButton}}</button>
-  <select #SelectedMethod (change)="Sort(SelectedMethod.selectedIndex)">
+  <button (click)="highlighting()" appButtonHover>{{textButton}}</button>
+  <select #selectedMethod (change)="sort(selectedMethod.selectedIndex)">
     <option value="" selected disabled hidden>Выберите метод сортировки</option>
     <option>По фамилии</option>
     <option>По имени</option>
@@ -9,14 +9,14 @@
     <option>По возрасту</option>
     <option>По оценке</option>
   </select>
-  <input #FieldForFind placeholder="Поиск студента..."
-         (input)="UserForFind = FieldForFind.value" type="text">
+  <input #fieldForFind placeholder="Поиск студента..."
+         (input)="userForFind = fieldForFind.value" type="text">
   <div [ngClass]="{'filtrationDiv': true}">
     <label>Фильтрация:</label>
-    <input [ngClass]="{'FilterFields': true}" #FieldForMark placeholder="Введите оценку"
-           (input)="markForFilter = FieldForMark.value" type="text">
-    <input [ngClass]="{'FilterFields': true}" #FieldForYear placeholder="Введите год"
-           (input)="dateForFilter = FieldForYear.value" type="text">
+    <input [ngClass]="{'filterFields': true}" #fieldForMark placeholder="Введите оценку"
+           (input)="markForFilter = fieldForMark.value" type="text">
+    <input [ngClass]="{'filterFields': true}" #fieldForYear placeholder="Введите год"
+           (input)="dateForFilter = fieldForYear.value" type="text">
   </div>
 </header>
 
@@ -35,8 +35,8 @@
     <div [ngClass]="{'studentsTable': true}">
       <ng-container *ngFor="let student of students let i=index">
         <app-student
-          [ngClass]="{'rowTable': true, 'dataTable': true, 'highlightClass': checkFunc(student), 'FindingUser': FindUser(student)}"
-          *ngIf="CheckFilter(student)"
+          [ngClass]="{'rowTable': true, 'dataTable': true, 'highlightClass': checkFunc(student), 'findingUser': findUser(student)}"
+          *ngIf="checkFilter(student)"
           [student]="student" [index]="i + 1" (showPopup)="showPopup(student)">
         </app-student>
       </ng-container>

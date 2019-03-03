@@ -1,4 +1,4 @@
-.PopUp {
+.popUp {
   opacity: .95;
   width: 100%;
   height: 100%;
@@ -12,7 +12,7 @@
   overflow: auto;
 }
 
-.PopUpOfDelete {
+.popUpOfDelete {
   align-items: center;
   background: #5C5E8E;
   border: 1px solid black;
@@ -20,20 +20,13 @@
   border-radius: 10px;
 }
 
-.PopUpButtons {
+.popUpButtons {
   margin-top: 10px;
   display: flex;
   justify-content: space-around;
 }
 
-.PopUpOfDelete label {
-  display:flex;
-  justify-content: space-between;
-  margin: 5px;
-  color: white;
-}
-
-button {
+.popUpButtons button {
   cursor: pointer;
   border: none;
   font-size: 10pt;
@@ -43,3 +36,9 @@ button {
   width: 30%;
 }
 
+.popUpOfDelete label {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  color: white;
+}

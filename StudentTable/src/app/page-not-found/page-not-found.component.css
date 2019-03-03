@@ -1,0 +1,45 @@
+div.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container p {
+  margin: 2%;
+  font-size: 40px;
+  color: white;
+}
+
+.container {
+  flex-direction: column;
+}
+
+input {
+  cursor: pointer;
+  border: none;
+  font-size: 30px;
+  background: white;
+  border-radius: 10px;
+  outline: none;
+  width: 100px;
+  height: 50px;
+}
+
+input:hover {
+  animation: radial-pulse 1s infinite;
+}
+
+@keyframes radial-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 0 40px rgba(0, 0, 0, 0);
+  }
+}

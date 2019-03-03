@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Student} from "../../models/student.model";
+import {Student} from '../../models/student.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class LoggerService {
   private logMode = 'consoleMode';
 
   constructor() {
-    this.makeParam(window.location.href)
+    this.makeParam(window.location.href);
   }
 
   public getLogsToDiv(): string [] {
@@ -27,7 +27,7 @@ export class LoggerService {
   }
 
   public getLogMode(): string {
-    return this.logMode
+    return this.logMode;
   }
 
   public setLogFunction(func: Function): void {
@@ -35,8 +35,9 @@ export class LoggerService {
   }
 
   private makeParam(href: string): void {
-    let param = href.split('logMode=');
-    if (param[1] === 'consoleMode' || param[1] === 'divMode')
+    const param = href.split('logMode=');
+    if (param[1] === 'consoleMode' || param[1] === 'divMode') {
       this.logMode = param[1];
+    }
   }
 }

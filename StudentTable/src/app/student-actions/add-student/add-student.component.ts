@@ -15,9 +15,9 @@ export class AddStudentComponent implements OnInit {
   private newStudent: Student;
   public newStudentForm: FormGroup;
 
-  constructor(private _StudentService: BackenldessService,
-              private _logger: LoggerService,
-              private _router: Router) {
+  constructor(private backenldessService: BackenldessService,
+              private logger: LoggerService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -38,11 +38,11 @@ export class AddStudentComponent implements OnInit {
     });
   }
 
-  hideForm(): void {
-    this._router.navigateByUrl('/');
+  private hideForm(): void {
+    this.router.navigateByUrl('/');
   }
 
-  onSubmit(): void {
+  private onSubmit(): void {
     const formValue = this.newStudentForm.value;
     this.newStudent = {
       dateOfBirth: formValue.dateOfBirth,
@@ -51,9 +51,9 @@ export class AddStudentComponent implements OnInit {
       patronymic: formValue.FIO.patronymic,
       secondName: formValue.FIO.secondName
     };
-    this._StudentService.addStudent(this.newStudent);
-    this._logger.log('Студент добавлен', this.newStudent.secondName);
-    this._router.navigateByUrl('/');
+    this.backenldessService.addStudent(this.newStudent);
+    this.logger.log('Студент добавлен', this.newStudent.secondName);
+    this.router.navigateByUrl('/');
   }
 
   private CheckAge(control: FormControl): ValidationErrors {
@@ -85,11 +85,11 @@ export class AddStudentComponent implements OnInit {
 
   private isAgeInvalid(controlName: string): boolean {
     const control = this.newStudentForm.get(controlName);
-    return control.invalid && control.touched ;
+    return control.invalid && control.touched;
   }
 
   private isMarkInvalid(controlName: string): boolean {
     const control = this.newStudentForm.get(controlName);
-    return (control.invalid && control.dirty) || (control.touched && control.invalid) ;
+    return (control.invalid && control.dirty) || (control.touched && control.invalid);
   }
 }
