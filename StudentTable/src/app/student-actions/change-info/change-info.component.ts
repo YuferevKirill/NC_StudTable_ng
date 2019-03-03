@@ -77,9 +77,9 @@ export class ChangeInfoComponent implements OnInit {
 
   private checkName(control: FormControl): ValidationErrors {
 
-    const name = control.value['name'];
-    const secondName = control.value['secondName'];
-    const patronymic = control.value['patronymic'];
+    const name = control.value['name'].toLowerCase();
+    const secondName = control.value['secondName'].toLowerCase();
+    const patronymic = control.value['patronymic'].toLowerCase();
 
     const nameValid = (name === secondName || name === patronymic || secondName === patronymic);
 
@@ -88,6 +88,18 @@ export class ChangeInfoComponent implements OnInit {
     }
     return null;
   }
+
+  private isFIOInvalid(controlName?: string): boolean {
+    const controlFIO = this.editStudentForm.get('FIO');
+
+    if (controlName !== undefined) {
+      const control = controlFIO.get(controlName);
+      return (controlFIO.hasError('invalidFields')) || (control.invalid);
+    } else {
+      return controlFIO.hasError('invalidFields') || (controlFIO.invalid);
+    }
+  }
+
 
   private isAgeInvalid(controlName: string): boolean {
     const control = this.editStudentForm.get(controlName);

@@ -13,35 +13,44 @@ header {
   height: auto;
   border-radius: 0 0 15px 15px;
   align-items: center;
-  padding: 5px;
+  padding: 5px 0 5px 0;
 }
 
 .header select {
-  height: 20px;
-  font-size: 10pt;
+  font-family: 'Open Sans', sans-serif;
+  height: 25px;
+  font-size: 14px;
   border-radius: 5px;
 }
 
 .header input {
   padding: 0 0 0 5px;
-  width: 145px;
-  height: 20px;
+  width: 165px;
+  height: 25px;
   background: #ffffff;
   border: none;
-  font-size: 10pt;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
   color: #63717f;
   border-radius: 5px;
   outline: none;
 }
 
 .header button {
-  width: 150px;
-  height: 20px;
+  font-family: 'Open Sans', sans-serif;
+  width: 170px;
+  height: 25px;
   border: none;
-  font-size: 10pt;
+  font-size: 14px;
   background: white;
   border-radius: 5px;
   outline: none;
+}
+
+.header label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #ffffff;
 }
 
 .data {
@@ -82,7 +91,6 @@ header {
   justify-content: center;
   align-items: center;
   font-family: 'Open Sans', sans-serif;
-  font-weight: bold;
   font-size: 14px;
   color: #ffffff;
 }
@@ -129,11 +137,11 @@ header {
 /*TODO цвета для двех классов ниже подобрать не такие отсосные*/
 
 .highlightClass {
-  background: red !important;
+  background: #FFDCDA !important;
 }
 
 .findingUser {
-  background: aquamarine !important;
+  background: #CAD4FF !important;
 }
 
 .filterFields {

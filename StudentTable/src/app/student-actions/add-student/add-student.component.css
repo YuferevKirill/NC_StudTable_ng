@@ -21,11 +21,12 @@
 }
 
 .addStudentForm p {
-  font-size: 20px;
   font-weight: bold;
   color: white;
   text-align: center;
   margin-top: 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15pt;
 }
 
 .fieldsOfForm label {
@@ -34,6 +35,8 @@
   margin: 5px;
   color: white;
   font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11pt;
 }
 
 .fieldsOfForm input {
@@ -43,6 +46,8 @@
   outline: none;
   border-radius: 5px;
   padding: 0 0 0 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11pt;
 }
 
 .addStudentFormButtons {
@@ -53,7 +58,8 @@
 
 .addStudentFormButtons input {
   border: none;
-  font-size: 10pt;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11pt;
   background: white;
   border-radius: 5px;
   outline: none;

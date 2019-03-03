@@ -6,13 +6,16 @@
     <div [ngClass]="{'fieldsOfForm': true}">
       <div formGroupName="FIO">
         <label> Фамилия:
-          <input type="text" name="secondName" formControlName="secondName" placeholder="Иванов"/>
+          <input type="text" name="secondName" formControlName="secondName" placeholder="Иванов"
+                 [ngClass]="{'invalidField': isFIOInvalid('secondName')}"/>
         </label>
         <label> Имя:
-          <input type="text" name="name" formControlName="name" placeholder="Иван"/>
+          <input type="text" name="name" formControlName="name" placeholder="Иван"
+                 [ngClass]="{'invalidField': isFIOInvalid('name')}"/>
         </label>
         <label> Отчество:
-          <input type="text" name="patronymic" formControlName="patronymic" placeholder="Иванович"/>
+          <input type="text" name="patronymic" formControlName="patronymic" placeholder="Иванович"
+                 [ngClass]="{'invalidField': isFIOInvalid('patronymic')}"/>
         </label>
       </div>
       <label> Дата рождения:
@@ -31,7 +34,7 @@
     </div>
 
     <div [ngClass]="{'errorsOfValidation': true}">
-      <div *ngIf="newStudentForm.get('FIO').hasError('invalidFields')">Фамилия, имя и отчество некорректны!</div>
+      <div *ngIf="isFIOInvalid()">Фамилия, имя и отчество некорректны!</div>
       <div *ngIf="isAgeInvalid('dateOfBirth')">Некорректная дата рождения!</div>
       <div *ngIf="isMarkInvalid('mark')">Оценка должна быть 0-5</div>
     </div>

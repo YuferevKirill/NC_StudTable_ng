@@ -27,9 +27,10 @@
 }
 
 .popUpButtons button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11pt;
   cursor: pointer;
   border: none;
-  font-size: 10pt;
   background: white;
   border-radius: 5px;
   outline: none;
@@ -37,6 +38,8 @@
 }
 
 .popUpOfDelete label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12pt;
   display: flex;
   justify-content: space-between;
   margin: 5px;

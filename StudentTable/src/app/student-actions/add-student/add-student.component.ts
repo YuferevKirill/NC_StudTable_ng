@@ -73,14 +73,25 @@ export class AddStudentComponent implements OnInit {
     const secondName = control.value['secondName'];
     const patronymic = control.value['patronymic'];
 
-    const nameValid = ((name === secondName && name !== '')
+    const nameInvalid = ((name === secondName && name !== '')
       || (name === patronymic && patronymic !== '')
       || (secondName === patronymic && secondName !== ''));
 
-    if (nameValid) {
+    if (nameInvalid) {
       return {invalidFields: 'Имя, фамилия или отчество совпадают'};
     }
     return null;
+  }
+
+  private isFIOInvalid(controlName?: string): boolean {
+    const controlFIO = this.newStudentForm.get('FIO');
+
+    if (controlName !== undefined) {
+      const control = controlFIO.get(controlName);
+      return (controlFIO.hasError('invalidFields')) || (control.invalid && control.dirty);
+    } else {
+      return controlFIO.hasError('invalidFields') || ((controlFIO.get('name').dirty && controlFIO.get('name').invalid));
+    }
   }
 
   private isAgeInvalid(controlName: string): boolean {
