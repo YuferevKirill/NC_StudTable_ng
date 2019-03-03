@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../../models/student.model';
-import {BackenldessService} from "../../global-services/Backendless/backenldess.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {LoggerService} from "../../global-services/Logger/logger.service";
+import {BackenldessService} from '../../global-services/Backendless/backenldess.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoggerService} from '../../global-services/Logger/logger.service';
 
 @Component({
   selector: 'app-change-info',
@@ -50,7 +50,7 @@ export class ChangeInfoComponent implements OnInit {
   onSubmit(): void {
     const formValue = this.editStudentForm.value;
 
-    let editedStud: Student = {
+    const editedStud: Student = {
       dateOfBirth: formValue.dateOfBirth,
       mark: formValue.mark,
       name: formValue.FIO.name,
@@ -89,8 +89,13 @@ export class ChangeInfoComponent implements OnInit {
     return null;
   }
 
-  private isControlInvalid(controlName: string): boolean {
+  private isAgeInvalid(controlName: string): boolean {
     const control = this.editStudentForm.get(controlName);
     return control.invalid && control.touched;
+  }
+
+  private isMarkInvalid(controlName: string): boolean {
+    const control = this.editStudentForm.get(controlName);
+    return (control.invalid && control.dirty) || (control.touched && control.invalid);
   }
 }

@@ -1,29 +1,38 @@
 <div [ngClass]="{'PopUp': true}">
   <form novalidate [ngClass]="{'EditStudentForm': true}" [formGroup]="editStudentForm" (ngSubmit)="onSubmit()">
-    <label>Изменение студента</label>
-    <div formGroupName="FIO">
-      <label> Фамилия:
-        <input type="text" name="secondName" formControlName="secondName"/>
+
+    <p [ngClass]="{'headOfForm': true}">Изменение студента</p>
+
+    <div [ngClass]="{'fieldsOfForm': true}">
+      <div formGroupName="FIO">
+        <label> Фамилия:
+          <input type="text" name="secondName" formControlName="secondName"/>
+        </label>
+        <label> Имя:
+          <input type="text" name="name" formControlName="name"/>
+        </label>
+        <label> Отчество:
+          <input type="text" name="patronymic" formControlName="patronymic"/>
+        </label>
+      </div>
+      <label> Дата рождения:
+        <input type="text" name="dateOfBirth" formControlName="dateOfBirth"/>
       </label>
-      <label> Имя:
-        <input type="text" name="name" formControlName="name"/>
-      </label>
-      <label> Отчество:
-        <input type="text" name="patronymic" formControlName="patronymic"/>
+      <label> Оценка:
+        <input type="text" name="mark" formControlName="mark"/>
       </label>
     </div>
-    <label> Дата рождения:
-      <input type="text" name="dateOfBirth" formControlName="dateOfBirth"/>
-    </label>
-    <label> Оценка:
-      <input type="text" name="mark" formControlName="mark"/>
-    </label>
+
     <div [ngClass]="{'EditStudentFormButtons': true}">
       <input type="submit" value="Изменить" [disabled]="editStudentForm.invalid">
-      <button type="button" (click)="hideForm()">Отменить</button>
+      <input type="button" (click)="hideForm()" value="Отменить"/>
     </div>
-    <div *ngIf="editStudentForm.get('FIO').hasError('invalidFields')">Фамилия, имя и отчество не должны совпадать!</div>
-    <div *ngIf="isControlInvalid('dateOfBirth')">Вам меньше 10 лет!</div>
-    <div *ngIf="isControlInvalid('mark')">Оценка должна быть 0-5</div>
+
+    <div [ngClass]="{'errorsOfValidation': true}">
+      <div *ngIf="editStudentForm.get('FIO').hasError('invalidFields')">Фамилия, имя и отчество некорректны!</div>
+      <div *ngIf="isAgeInvalid('dateOfBirth')">Некорректная дата рождения!</div>
+      <div *ngIf="isMarkInvalid('mark')">Оценка должна быть 0-5</div>
+    </div>
+
   </form>
 </div>

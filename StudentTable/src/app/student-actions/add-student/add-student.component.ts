@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../../models/student.model';
-import {BackenldessService} from "../../global-services/Backendless/backenldess.service";
-import {Router} from "@angular/router";
-import {LoggerService} from "../../global-services/Logger/logger.service";
+import {BackenldessService} from '../../global-services/Backendless/backenldess.service';
+import {Router} from '@angular/router';
+import {LoggerService} from '../../global-services/Logger/logger.service';
 
 @Component({
   selector: 'app-add-student',
@@ -30,8 +30,8 @@ export class AddStudentComponent implements OnInit {
         secondName: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
         name: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
         patronymic: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)])
-      }, [this.CheckName]),
-      dateOfBirth: new FormControl('', [Validators.required, this.CheckAge]),
+      }, [this.checkFIO]),
+      dateOfBirth: new FormControl('', [Validators.required, this.CheckAge, Validators.pattern(/^\d{1,2}\.\d{1,2}\.\d{4}$/)]),
       mark: new FormControl('', [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
         Validators.minLength(1)])
@@ -67,13 +67,15 @@ export class AddStudentComponent implements OnInit {
     return null;
   }
 
-  private CheckName(control: FormControl): ValidationErrors {
+  private checkFIO(control: FormControl): ValidationErrors {
 
     const name = control.value['name'];
     const secondName = control.value['secondName'];
     const patronymic = control.value['patronymic'];
 
-    const nameValid = ((name === secondName && name !== '') || (name === patronymic && patronymic !== '') || (secondName === patronymic && secondName !== '' ));
+    const nameValid = ((name === secondName && name !== '')
+      || (name === patronymic && patronymic !== '')
+      || (secondName === patronymic && secondName !== ''));
 
     if (nameValid) {
       return {invalidFields: 'Имя, фамилия или отчество совпадают'};
@@ -81,8 +83,13 @@ export class AddStudentComponent implements OnInit {
     return null;
   }
 
-  private isControlInvalid(controlName: string): boolean {
+  private isAgeInvalid(controlName: string): boolean {
     const control = this.newStudentForm.get(controlName);
-    return control.invalid && control.touched;
+    return control.invalid && control.touched ;
+  }
+
+  private isMarkInvalid(controlName: string): boolean {
+    const control = this.newStudentForm.get(controlName);
+    return (control.invalid && control.dirty) || (control.touched && control.invalid) ;
   }
 }

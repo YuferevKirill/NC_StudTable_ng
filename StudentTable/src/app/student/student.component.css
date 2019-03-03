@@ -1,6 +1,71 @@
-.ColumnTable{
-  display: table-cell;
-  text-align: center;
-  border: 1px solid #ccc;
-  vertical-align: middle;
+.columnTable {
+  display: flex;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #969696;
+  align-items: center;
+  justify-content: center;
+}
+
+.indexColumn {
+  width: 30px;
+}
+
+.secondNameColumn {
+  width: 20%;
+}
+
+.nameColumn {
+  width: 15%;
+}
+
+.patronymicColumn {
+  width: 25%;
+}
+
+.dateOfBirthColumn {
+  width: 100px;
+}
+
+.markColumn {
+  width: 100px;
+}
+
+.changeColumn {
+  width: 15%;
+  max-width: 150px;
+}
+
+.changeColumn span {
+  padding: 2px 10px 2px 10px;
+  background: transparent;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+.changeColumn span:hover {
+  background: #39558E;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.deleteColumn {
+  width: 15%;
+  max-width: 150px;
+}
+
+.deleteColumn span {
+  padding: 2px 10px 2px 10px;
+  background: transparent;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+.deleteColumn span:hover {
+
+  background: #39558E;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+  cursor: pointer;
 }

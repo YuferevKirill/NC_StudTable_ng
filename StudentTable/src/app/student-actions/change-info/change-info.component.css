@@ -1,4 +1,5 @@
 .PopUp{
+  opacity: .95 ;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -12,16 +13,36 @@
 }
 
 .EditStudentForm {
-  background: lightgrey;
+  align-items: center;
+  background: #5C5E8E;
   border: 1px solid black;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
-.EditStudentForm label{
+.EditStudentForm p {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.fieldsOfForm label {
   display:flex;
   justify-content: space-between;
   margin: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.fieldsOfForm input {
+  margin-left: 20px;
+  height: 20px;
+  border-color: transparent;
+  outline: none;
+  border-radius: 5px;
+  padding: 0 0 0 5px;
 }
 
 .EditStudentFormButtons {
@@ -30,6 +51,24 @@
   justify-content: space-around;
 }
 
-input.ng-touched.ng-invalid{
-  border-color: red;
+.EditStudentFormButtons input {
+  border: none;
+  font-size: 10pt;
+  background: white;
+  border-radius: 5px;
+  outline: none;
+  width: 30%;
 }
+
+input.invalidField {
+  border-color: red !important;
+}
+
+.errorsOfValidation {
+  margin-top: 10px;
+  color: coral;
+}
+
+/*input.ng-touched .ng-invalid{*/
+  /*border-color: red;*/
+/*}*/

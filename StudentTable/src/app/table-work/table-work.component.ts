@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Student} from '../models/student.model';
-import {BackenldessService} from "../global-services/Backendless/backenldess.service";
-import {Router} from "@angular/router";
-import {LoggerService} from "../global-services/Logger/logger.service";
+import {BackenldessService} from '../global-services/Backendless/backenldess.service';
+import {Router} from '@angular/router';
+import {LoggerService} from '../global-services/Logger/logger.service';
 
 @Component({
   selector: 'app-table-work',
@@ -50,12 +50,12 @@ export class TableWorkComponent implements OnInit {
       case false:
         this.highlightLowScore = true;
         this.TextButton = 'Снять выделение';
-        this._logger.log('Двоечники выделены')
+        this._logger.log('Двоечники выделены');
         return;
       case true:
         this.highlightLowScore = false;
         this.TextButton = 'Выделить двоечников';
-        this._logger.log('Выделение двоечников снято')
+        this._logger.log('Выделение двоечников снято');
         return;
     }
   }

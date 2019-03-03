@@ -1,4 +1,5 @@
-.PopUp{
+.PopUp {
+  opacity: .95;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -12,10 +13,11 @@
 }
 
 .PopUpOfDelete {
-  background: lightgrey;
+  align-items: center;
+  background: #5C5E8E;
   border: 1px solid black;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .PopUpButtons {
@@ -24,7 +26,20 @@
   justify-content: space-around;
 }
 
-button{
+.PopUpOfDelete label {
+  display:flex;
+  justify-content: space-between;
+  margin: 5px;
+  color: white;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-size: 10pt;
+  background: white;
   border-radius: 5px;
+  outline: none;
+  width: 30%;
 }
 

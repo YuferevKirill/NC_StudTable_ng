@@ -1,29 +1,40 @@
-<div [ngClass]="{'PopUp': true}">
-  <form novalidate [ngClass]="{'AddStudentForm': true}" [formGroup]="newStudentForm" (ngSubmit)="onSubmit()">
-    <label>Добавление студента</label>
-    <div formGroupName="FIO">
-      <label> Фамилия:
-        <input type="text" name="secondName" formControlName="secondName" placeholder="Иванов"/>
+<div [ngClass]="{'popUp': true}">
+  <form novalidate [ngClass]="{'addStudentForm': true}" [formGroup]="newStudentForm" (ngSubmit)="onSubmit()">
+
+    <p [ngClass]="{'headOfForm': true}">Добавление студента</p>
+
+    <div [ngClass]="{'fieldsOfForm': true}">
+      <div formGroupName="FIO">
+        <label> Фамилия:
+          <input type="text" name="secondName" formControlName="secondName" placeholder="Иванов"/>
+        </label>
+        <label> Имя:
+          <input type="text" name="name" formControlName="name" placeholder="Иван"/>
+        </label>
+        <label> Отчество:
+          <input type="text" name="patronymic" formControlName="patronymic" placeholder="Иванович"/>
+        </label>
+      </div>
+      <label> Дата рождения:
+        <input [ngClass]="{'invalidField': isAgeInvalid('dateOfBirth')}"
+               type="text" name="dateOfBirth" formControlName="dateOfBirth" placeholder="ДД.ММ.ГГГГ"/>
       </label>
-      <label> Имя:
-        <input type="text" name="name" formControlName="name" placeholder="Иван"/>
-      </label>
-      <label> Отчество:
-        <input type="text" name="patronymic" formControlName="patronymic" placeholder="Иванович"/>
+      <label> Оценка:
+        <input [ngClass]="{'invalidField': isMarkInvalid('mark')}"
+               type="text" name="mark" formControlName="mark" placeholder="0-5"/>
       </label>
     </div>
-    <label> Дата рождения:
-      <input type="text" name="dateOfBirth" formControlName="dateOfBirth" placeholder="ДД.ММ.ГГГГ"/>
-    </label>
-    <label> Оценка:
-      <input type="text" name="mark" formControlName="mark" placeholder="0-5"/>
-    </label>
-    <div [ngClass]="{'AddStudentFormButtons': true}">
+
+    <div [ngClass]="{'addStudentFormButtons': true}">
       <input type="submit" value="Создать" [disabled]="newStudentForm.invalid">
-      <button type="button" (click)="hideForm()">Отменить</button>
+      <input type="button" value="Отменить" (click)="hideForm()"/>
     </div>
-    <div *ngIf="newStudentForm.get('FIO').hasError('invalidFields')">Фамилия, имя и отчество не должны совпадать!</div>
-    <div *ngIf="isControlInvalid('dateOfBirth')">Вам меньше 10 лет!</div>
-    <div *ngIf="isControlInvalid('mark')">Оценка должна быть 0-5</div>
+
+    <div [ngClass]="{'errorsOfValidation': true}">
+      <div *ngIf="newStudentForm.get('FIO').hasError('invalidFields')">Фамилия, имя и отчество некорректны!</div>
+      <div *ngIf="isAgeInvalid('dateOfBirth')">Некорректная дата рождения!</div>
+      <div *ngIf="isMarkInvalid('mark')">Оценка должна быть 0-5</div>
+    </div>
+
   </form>
 </div>
