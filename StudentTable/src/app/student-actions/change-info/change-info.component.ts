@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Student} from '../../models/student.model';
-import {BackenldessService} from "../../global-services/Backendless/backenldess.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {LoggerService} from "../../global-services/Logger/logger.service";
+import {BackenldessService} from '../../global-services/Backendless/backenldess.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoggerService} from '../../global-services/Logger/logger.service';
 
 @Component({
   selector: 'app-change-info',
@@ -15,11 +15,11 @@ export class ChangeInfoComponent implements OnInit {
   public editStudentForm: FormGroup;
   private studentToEdit;
 
-  constructor(private _StudentService: BackenldessService,
-              private _logger: LoggerService,
-              private _router: Router,
-              private _route: ActivatedRoute) {
-    this._route.params.subscribe(params => this.studentToEdit = this._StudentService.getStudentBySecondName(params.secondName));
+  constructor(private backenldessService: BackenldessService,
+              private logger: LoggerService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe(params => this.studentToEdit = this.backenldessService.getStudentBySecondName(params.secondName));
   }
 
   ngOnInit(): void {
@@ -35,22 +35,22 @@ export class ChangeInfoComponent implements OnInit {
           [Validators.required, Validators.pattern(/[А-я]/)]),
         patronymic: new FormControl(this.studentToEdit.patronymic,
           [Validators.required, Validators.pattern(/[А-я]/)])
-      }, [this.CheckName]),
-      dateOfBirth: new FormControl(this.studentToEdit.dateOfBirth, [Validators.required, this.CheckAge]),
+      }, [this.checkFIO]),
+      dateOfBirth: new FormControl(this.studentToEdit.dateOfBirth, [Validators.required, this.checkAge]),
       mark: new FormControl(this.studentToEdit.mark, [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
         Validators.minLength(1)])
     });
   }
 
-  hideForm(): void {
-    this._router.navigateByUrl('/');
+  private hideForm(): void {
+    this.router.navigateByUrl('/');
   }
 
-  onSubmit(): void {
+  private onSubmit(): void {
     const formValue = this.editStudentForm.value;
 
-    let editedStud: Student = {
+    const editedStud: Student = {
       dateOfBirth: formValue.dateOfBirth,
       mark: formValue.mark,
       name: formValue.FIO.name,
@@ -59,15 +59,17 @@ export class ChangeInfoComponent implements OnInit {
       objectId: this.studentToEdit.objectId
     };
 
-    this._StudentService.editStudent(editedStud);
-    this._logger.log('Студент изменён', editedStud.secondName);
-    this._router.navigateByUrl('/');
+    this.backenldessService.editStudent(editedStud);
+    this.logger.log('Студент изменён', editedStud.secondName);
+    this.router.navigateByUrl('/');
   }
 
-  private CheckAge(control: FormControl): ValidationErrors {
-    const value = control.value.slice(-4);
+  private checkAge(control: FormControl): ValidationErrors {
+    const value = control.value.split('-');
+    const birthYear = value[0];
+    const currentYear = new Date().getFullYear();
 
-    const ageValid = ((2019 - +value) > 10);
+    const ageValid = ((currentYear - +birthYear) > 10) && (birthYear >= 1900);
 
     if (!ageValid) {
       return {invalidAge: 'Возраст не прошёл валидацию'};
@@ -75,22 +77,39 @@ export class ChangeInfoComponent implements OnInit {
     return null;
   }
 
-  private CheckName(control: FormControl): ValidationErrors {
+  private checkFIO(control: FormControl): ValidationErrors {
+    const name = control.value['name'].toLowerCase();
+    const secondName = control.value['secondName'].toLowerCase();
+    const patronymic = control.value['patronymic'].toLowerCase();
 
-    const name = control.value['name'];
-    const secondName = control.value['secondName'];
-    const patronymic = control.value['patronymic'];
+    const nameInvalid = ((name === secondName && name !== '')
+      || (name === patronymic && patronymic !== '')
+      || (secondName === patronymic && secondName !== ''));
 
-    const nameValid = (name === secondName || name === patronymic || secondName === patronymic);
-
-    if (nameValid) {
+    if (nameInvalid) {
       return {invalidFields: 'Имя, фамилия или отчество совпадают'};
     }
     return null;
   }
 
-  private isControlInvalid(controlName: string): boolean {
+  private isFIOInvalid(controlName?: string): boolean {
+    const controlFIO = this.editStudentForm.get('FIO');
+
+    if (controlName !== undefined) {
+      const control = controlFIO.get(controlName);
+      return (controlFIO.hasError('invalidFields')) || (control.invalid);
+    } else {
+      return controlFIO.hasError('invalidFields') || (controlFIO.invalid);
+    }
+  }
+
+  private isAgeInvalid(controlName: string): boolean {
     const control = this.editStudentForm.get(controlName);
     return control.invalid && control.touched;
+  }
+
+  private isMarkInvalid(controlName: string): boolean {
+    const control = this.editStudentForm.get(controlName);
+    return (control.invalid && control.dirty) || (control.touched && control.invalid);
   }
 }

@@ -1,8 +1,8 @@
-<div [ngClass]="{'ColumnTable': true}">{{ index }}</div>
-<div [ngClass]="{'ColumnTable': true}">{{ student.secondName }}</div>
-<div [ngClass]="{'ColumnTable': true}">{{ student.name }}</div>
-<div [ngClass]="{'ColumnTable': true}">{{ student.patronymic }}</div>
-<div [ngClass]="{'ColumnTable': true}">{{ student.dateOfBirth | ageConverter }}</div>
-<div [ngClass]="{'ColumnTable': true}">{{ student.mark}}</div>
-<div [ngClass]="{'ColumnTable': true}" (click)="onDelete()">Удалить</div>
-<div [ngClass]="{'ColumnTable': true}" (click)="onChange()">Изменить</div>
+<div [ngClass]="{'columnTable': true, 'indexColumn': true}">{{ index }}</div>
+<div [ngClass]="{'columnTable': true, 'secondNameColumn': true}">{{ student.secondName }}</div>
+<div [ngClass]="{'columnTable': true, 'nameColumn': true}">{{ student.name }}</div>
+<div [ngClass]="{'columnTable': true, 'patronymicColumn': true}">{{ student.patronymic }}</div>
+<div [ngClass]="{'columnTable': true, 'dateOfBirthColumn': true}">{{ student.dateOfBirth | ageConverter }}</div>
+<div [ngClass]="{'columnTable': true, 'markColumn': true}">{{ student.mark}}</div>
+<div [ngClass]="{'columnTable': true, 'changeColumn': true}"><span (click)="onChange()">Изменить</span></div>
+<div [ngClass]="{'columnTable': true, 'deleteColumn': true}"><span (click)="onDelete()">Удалить</span></div>

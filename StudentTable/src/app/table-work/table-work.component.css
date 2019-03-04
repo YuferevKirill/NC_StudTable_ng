@@ -1,35 +1,161 @@
-.Table {
-  display: table;
+/*TODO шрифты в хэдере одинаковые*/
+/*TODO кнопки изменить/удалить*/
+
+header {
+  position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  top: 0;
+  left: 0;
+  background-color: #545681;
   width: 100%;
-  border-collapse: collapse;
+  height: auto;
+  border-radius: 0 0 15px 15px;
+  align-items: center;
+  padding: 5px 0 5px 0;
 }
 
-.RowTable{
-  display: table-row;
+.header select {
+  font-family: 'Open Sans', sans-serif;
+  height: 25px;
+  font-size: 14px;
+  border-radius: 5px;
 }
 
-.highlightClass{
-  background: red;
+.header input {
+  padding: 0 0 0 5px;
+  width: 165px;
+  height: 25px;
+  background: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  color: #63717f;
+  border-radius: 5px;
+  outline: none;
 }
 
-.FindingUser{
-  background: aquamarine;
+.header button {
+  font-family: 'Open Sans', sans-serif;
+  width: 170px;
+  height: 25px;
+  border: none;
+  font-size: 14px;
+  background: white;
+  border-radius: 5px;
+  outline: none;
 }
 
-.FilterFields{
-  margin: 5px;
+.header label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #ffffff;
 }
 
-.Field {
+.data {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}
+
+.table {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+}
+
+.studentsTable :nth-child(even) {
+  background-color: #ffffff;
+}
+
+.studentsTable :nth-child(odd) {
+  background-color: #F5F5F5;
+}
+
+.studentsTable :last-child {
+  border-radius: 0 0 15px 15px;
+}
+
+.headOfTable {
+  background-color: #36304A;
+  border-radius: 15px 15px 0 0;
+}
+
+.headOfTable .rowTable {
+  width: 100%;
+}
+
+.headOfTable .columnTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.rowTable {
+  height: 30px;
+  display: flex;
+}
+
+.indexColumn {
+  width: 30px;
+}
+
+.secondNameColumn {
+  width: 20%;
+}
+
+.nameColumn {
+  width: 15%;
+}
+
+.patronymicColumn {
+  width: 25%;
+}
+
+.dateOfBirthColumn {
+  width: 100px;
+}
+
+.markColumn {
+  width: 100px;
+}
+
+.changeColumn {
+  width: 15%;
+  max-width: 150px;
+}
+
+.deleteColumn {
+  width: 15%;
+  max-width: 150px;
+}
+
+/*TODO цвета для двех классов ниже подобрать не такие отсосные*/
+
+.highlightClass {
+  background: #FFDCDA !important;
+}
+
+.findingUser {
+  background: #CAD4FF !important;
+}
+
+.filterFields {
   margin: 5px;
 }
 
 .hovered {
   transform: scale(1.05);
-  border-color: coral;
   transition: .5s all;
 }
 
 .logsDiv {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #ffffff;
   margin: 5px;
 }

@@ -1,42 +1,54 @@
-<div>
-  <div [ngClass]="{'Table': true}">
-    <ng-container *ngFor="let student of students let i=index">
-      <app-student
-        [ngClass]="{'RowTable': true, 'highlightClass': checkFunc(student), 'FindingUser': FindUser(student)}"
-        *ngIf="CheckFilter(student)"
-        [student]="student" [index]="i + 1" (showPopup)="showPopup(student)">
-      </app-student>
-    </ng-container>
+<header [ngClass]="{'header': true}">
+  <button (click)="showAddPopup()" appButtonHover>Добавить студента</button>
+  <button (click)="highlighting()" appButtonHover>{{textButton}}</button>
+  <select #selectedMethod (change)="sort(selectedMethod.selectedIndex)">
+    <option value="" selected disabled hidden>Выберите метод сортировки</option>
+    <option>По фамилии</option>
+    <option>По имени</option>
+    <option>По отчеству</option>
+    <option>По возрасту</option>
+    <option>По оценке</option>
+  </select>
+  <input #fieldForFind placeholder="Поиск студента..."
+         (input)="userForFind = fieldForFind.value" type="text">
+  <div [ngClass]="{'filtrationDiv': true}">
+    <label>Фильтрация:</label>
+    <input [ngClass]="{'filterFields': true}" #fieldForMark placeholder="Введите оценку"
+           (input)="markForFilter = fieldForMark.value" type="text">
+    <input [ngClass]="{'filterFields': true}" #fieldForYear placeholder="Введите год"
+           (input)="dateForFilter = fieldForYear.value" type="text">
   </div>
-  <div [ngClass]="{'highlightPeople': true, 'Field': true}">
-    <button (click)="highlighting()" appButtonHover>{{TextButton}}</button>
-  </div>
-  <div [ngClass]="{'FindUser': true, 'Field': true}">
-    <input #FieldForFind placeholder="Поиск студента..." (input)="UserForFind = FieldForFind.value" type="text">
-  </div>
-  <div [ngClass]="{'Field': true, 'Sort': true}">
-    <select #SelectedMethod (change)="Sort(SelectedMethod.selectedIndex)">
-      <option value="" selected disabled hidden>Выберите метод сортировки</option>
-      <option>По фамилии</option>
-      <option>По имени</option>
-      <option>По отчеству</option>
-      <option>По возрасту</option>
-      <option>По оценке</option>
-    </select>
-  </div>
-  <label [ngClass]="{'Field': true}">Фильтрация:</label>
-  <input [ngClass]="{'FilterFields': true}" #FieldForMark placeholder="Введите оценку"
-         (input)="markForFilter = FieldForMark.value" type="text">
-  <input [ngClass]="{'FilterFields': true}" #FieldForYear placeholder="Введите год"
-         (input)="dateForFilter = FieldForYear.value" type="text">
-  <div>
-    <button (click)="showAddPopup()" appButtonHover>Добавить студента</button>
-  </div>
-    <div *ngIf="isLogDivVisible"> Логи:
-      <div [ngClass]="{'logsDiv': true}">
-        <div *ngFor="let log of logs" >{{log}}</div>
-      </div>
+</header>
+
+<div [ngClass]="{'data': true}">
+  <div [ngClass]="{'table': true}">
+    <div [ngClass]="{'rowTable': true, 'headOfTable': true}">
+      <div [ngClass]="{'columnTable': true, 'indexColumn': true}">№</div>
+      <div [ngClass]="{'columnTable': true, 'secondNameColumn': true}">Фамилия</div>
+      <div [ngClass]="{'columnTable': true, 'nameColumn': true}">Имя</div>
+      <div [ngClass]="{'columnTable': true, 'patronymicColumn': true}">Отчество</div>
+      <div [ngClass]="{'columnTable': true, 'dateOfBirthColumn': true}">Возраст</div>
+      <div [ngClass]="{'columnTable': true, 'markColumn': true}">Оценка</div>
+      <div [ngClass]="{'columnTable': true, 'changeColumn': true}">Изменение</div>
+      <div [ngClass]="{'columnTable': true, 'deleteColumn': true}">Удаление</div>
     </div>
-  <app-popup *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent" (hidePopup)="hidePopup()"></app-popup>
+    <div [ngClass]="{'studentsTable': true}">
+      <ng-container *ngFor="let student of students let i=index">
+        <app-student
+          [ngClass]="{'rowTable': true, 'dataTable': true, 'highlightClass': checkFunc(student), 'findingUser': findUser(student)}"
+          *ngIf="checkFilter(student)"
+          [student]="student" [index]="i + 1" (showPopup)="showPopup(student)">
+        </app-student>
+      </ng-container>
+    </div>
+  </div>
 </div>
+
+<div *ngIf="isLogDivVisible"> Логи:
+  <div [ngClass]="{'logsDiv': true}">
+    <div *ngFor="let log of logs">{{log}}</div>
+  </div>
+</div>
+<app-popup *ngIf="isDeletePopUpVisible" [student]="isDeleteStudent" (hidePopup)="hidePopup()"></app-popup>
+
 <router-outlet></router-outlet>
