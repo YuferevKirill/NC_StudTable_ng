@@ -5,9 +5,11 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class AgeConverterPipe implements PipeTransform {
 
-  transform(Birthday: string): number {
-    const StudYear = +Birthday.slice(-4);
-    return 2019 - StudYear;
-  }
+  transform(date: string): number {
+    const currentYear = new Date().getFullYear();
+    const dateOfBirth = date.split('-');
+    const studYear = +dateOfBirth[0];
 
+    return currentYear - studYear;
+  }
 }

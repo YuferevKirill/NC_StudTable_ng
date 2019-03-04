@@ -150,10 +150,12 @@ header {
 
 .hovered {
   transform: scale(1.05);
-  border-color: coral;
   transition: .5s all;
 }
 
 .logsDiv {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #ffffff;
   margin: 5px;
 }

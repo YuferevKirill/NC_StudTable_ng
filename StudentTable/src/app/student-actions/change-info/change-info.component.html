@@ -6,31 +6,31 @@
     <div [ngClass]="{'fieldsOfForm': true}">
       <div formGroupName="FIO">
         <label> Фамилия:
-          <input type="text" name="secondName" formControlName="secondName"
+          <input type="text" name="secondName" formControlName="secondName" placeholder="Иванов"
                  [ngClass]="{'invalidField': isFIOInvalid('secondName')}"/>
         </label>
         <label> Имя:
-          <input type="text" name="name" formControlName="name"
+          <input type="text" name="name" formControlName="name" placeholder="Иван"
                  [ngClass]="{'invalidField': isFIOInvalid('name')}"/>
         </label>
         <label> Отчество:
-          <input type="text" name="patronymic" formControlName="patronymic"
+          <input type="text" name="patronymic" formControlName="patronymic" placeholder="Иванович"
                  [ngClass]="{'invalidField': isFIOInvalid('patronymic')}"/>
         </label>
       </div>
       <label> Дата рождения:
-        <input [ngClass]="{'invalidField': isAgeInvalid('dateOfBirth')}"
-          type="text" name="dateOfBirth" formControlName="dateOfBirth"/>
+        <input type="date" name="dateOfBirth" formControlName="dateOfBirth" placeholder="ДД.ММ.ГГГГ"
+               [ngClass]="{'invalidField': isAgeInvalid('dateOfBirth')}"/>
       </label>
       <label> Оценка:
-        <input [ngClass]="{'invalidField': isMarkInvalid('mark')}"
-               type="text" name="mark" formControlName="mark"/>
+        <input type="text" name="mark" formControlName="mark" placeholder="0-5"
+               [ngClass]="{'invalidField': isMarkInvalid('mark')}"/>
       </label>
     </div>
 
     <div [ngClass]="{'editStudentFormButtons': true}">
       <input type="submit" value="Изменить" [disabled]="editStudentForm.invalid">
-      <input type="button" (click)="hideForm()" value="Отменить"/>
+      <input type="button" value="Отменить" (click)="hideForm()"/>
     </div>
 
     <div [ngClass]="{'errorsOfValidation': true}">

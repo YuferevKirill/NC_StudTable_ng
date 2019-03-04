@@ -14,10 +14,12 @@ export class AddStudentComponent implements OnInit {
 
   private newStudent: Student;
   public newStudentForm: FormGroup;
+  private curentDate: Date;
 
   constructor(private backenldessService: BackenldessService,
               private logger: LoggerService,
               private router: Router) {
+    this.curentDate = new Date();
   }
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class AddStudentComponent implements OnInit {
         name: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)]),
         patronymic: new FormControl('', [Validators.required, Validators.pattern(/[А-я]/)])
       }, [this.checkFIO]),
-      dateOfBirth: new FormControl('', [Validators.required, this.CheckAge, Validators.pattern(/^\d{1,2}\.\d{1,2}\.\d{4}$/)]),
+      dateOfBirth: new FormControl('', [Validators.required, this.сheckAge]),
       mark: new FormControl('', [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
         Validators.minLength(1)])
@@ -56,10 +58,12 @@ export class AddStudentComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  private CheckAge(control: FormControl): ValidationErrors {
-    const value = control.value.slice(-4);
+  private сheckAge(control: FormControl): ValidationErrors {
+    const value = control.value.split('-');
+    const birthYear = value[0];
+    const currentYear = new Date().getFullYear();
 
-    const ageValid = ((2019 - +value) > 10);
+    const ageValid = ((currentYear - +birthYear) > 10) && (birthYear >= 1900);
 
     if (!ageValid) {
       return {invalidAge: 'Возраст не прошёл валидацию'};
@@ -69,9 +73,9 @@ export class AddStudentComponent implements OnInit {
 
   private checkFIO(control: FormControl): ValidationErrors {
 
-    const name = control.value['name'];
-    const secondName = control.value['secondName'];
-    const patronymic = control.value['patronymic'];
+    const name = control.value['name'].toLowerCase();
+    const secondName = control.value['secondName'].toLowerCase();
+    const patronymic = control.value['patronymic'].toLowerCase();
 
     const nameInvalid = ((name === secondName && name !== '')
       || (name === patronymic && patronymic !== '')
@@ -88,9 +92,9 @@ export class AddStudentComponent implements OnInit {
 
     if (controlName !== undefined) {
       const control = controlFIO.get(controlName);
-      return (controlFIO.hasError('invalidFields')) || (control.invalid && control.dirty);
+      return (controlFIO.hasError('invalidFields')) || (control.invalid && control.touched);
     } else {
-      return controlFIO.hasError('invalidFields') || ((controlFIO.get('name').dirty && controlFIO.get('name').invalid));
+      return controlFIO.hasError('invalidFields') || (controlFIO.touched && controlFIO.invalid);
     }
   }
 

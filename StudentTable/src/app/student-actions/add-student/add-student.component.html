@@ -19,12 +19,12 @@
         </label>
       </div>
       <label> Дата рождения:
-        <input [ngClass]="{'invalidField': isAgeInvalid('dateOfBirth')}"
-               type="text" name="dateOfBirth" formControlName="dateOfBirth" placeholder="ДД.ММ.ГГГГ"/>
+        <input type="date" name="dateOfBirth" formControlName="dateOfBirth" placeholder="ДД.ММ.ГГГГ"
+               [ngClass]="{'invalidField': isAgeInvalid('dateOfBirth')}"/>
       </label>
       <label> Оценка:
-        <input [ngClass]="{'invalidField': isMarkInvalid('mark')}"
-               type="text" name="mark" formControlName="mark" placeholder="0-5"/>
+        <input type="text" name="mark" formControlName="mark" placeholder="0-5"
+               [ngClass]="{'invalidField': isMarkInvalid('mark')}"/>
       </label>
     </div>
 

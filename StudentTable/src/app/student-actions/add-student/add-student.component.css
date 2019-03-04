@@ -42,6 +42,7 @@
 .fieldsOfForm input {
   margin-left: 20px;
   height: 20px;
+  width: 165px;
   border-color: transparent;
   outline: none;
   border-radius: 5px;

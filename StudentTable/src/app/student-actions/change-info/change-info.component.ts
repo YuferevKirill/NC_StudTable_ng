@@ -35,7 +35,7 @@ export class ChangeInfoComponent implements OnInit {
           [Validators.required, Validators.pattern(/[А-я]/)]),
         patronymic: new FormControl(this.studentToEdit.patronymic,
           [Validators.required, Validators.pattern(/[А-я]/)])
-      }, [this.checkName]),
+      }, [this.checkFIO]),
       dateOfBirth: new FormControl(this.studentToEdit.dateOfBirth, [Validators.required, this.checkAge]),
       mark: new FormControl(this.studentToEdit.mark, [Validators.required, Validators.pattern(/[0-5]/),
         Validators.maxLength(1),
@@ -65,9 +65,11 @@ export class ChangeInfoComponent implements OnInit {
   }
 
   private checkAge(control: FormControl): ValidationErrors {
-    const value = control.value.slice(-4);
+    const value = control.value.split('-');
+    const birthYear = value[0];
+    const currentYear = new Date().getFullYear();
 
-    const ageValid = ((2019 - +value) > 10);
+    const ageValid = ((currentYear - +birthYear) > 10) && (birthYear >= 1900);
 
     if (!ageValid) {
       return {invalidAge: 'Возраст не прошёл валидацию'};
@@ -75,15 +77,16 @@ export class ChangeInfoComponent implements OnInit {
     return null;
   }
 
-  private checkName(control: FormControl): ValidationErrors {
-
+  private checkFIO(control: FormControl): ValidationErrors {
     const name = control.value['name'].toLowerCase();
     const secondName = control.value['secondName'].toLowerCase();
     const patronymic = control.value['patronymic'].toLowerCase();
 
-    const nameValid = (name === secondName || name === patronymic || secondName === patronymic);
+    const nameInvalid = ((name === secondName && name !== '')
+      || (name === patronymic && patronymic !== '')
+      || (secondName === patronymic && secondName !== ''));
 
-    if (nameValid) {
+    if (nameInvalid) {
       return {invalidFields: 'Имя, фамилия или отчество совпадают'};
     }
     return null;
@@ -99,7 +102,6 @@ export class ChangeInfoComponent implements OnInit {
       return controlFIO.hasError('invalidFields') || (controlFIO.invalid);
     }
   }
-
 
   private isAgeInvalid(controlName: string): boolean {
     const control = this.editStudentForm.get(controlName);
