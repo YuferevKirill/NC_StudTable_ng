@@ -113,8 +113,10 @@ export class TableWorkComponent implements OnInit {
         return;
       case 4:
         this.students.sort(function (a, b) {
-          const dateA = +a.dateOfBirth.slice(-4), dateB = +b.dateOfBirth.slice(-4);
-          return dateA - dateB;
+          const dateA = a.dateOfBirth.split('-');
+          const dateB = b.dateOfBirth.split('-');
+          const yearA = +dateA[0], yearB = +dateB[0];
+          return yearB - yearA;
         });
         this.logger.log('Сортировка по возрасту');
         return;
@@ -138,12 +140,12 @@ export class TableWorkComponent implements OnInit {
   }
 
   private checkFilterMark(student: Student): boolean {
-    return +student.mark >= +this.markForFilter;
+    return +student.mark === +this.markForFilter;
   }
 
   private checkFilterDate(student: Student): boolean {
-    const date = new Date(student.dateOfBirth.split('.').reverse().join('-'));
-    return date >= new Date(this.dateForFilter.split('.').reverse().join('-'));
+    const date = student.dateOfBirth.split('-');
+    return date[0] === this.dateForFilter;
   }
 
   private checkFilter(student: Student): boolean {

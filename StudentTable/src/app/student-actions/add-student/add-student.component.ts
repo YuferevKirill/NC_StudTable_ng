@@ -94,7 +94,10 @@ export class AddStudentComponent implements OnInit {
       const control = controlFIO.get(controlName);
       return (controlFIO.hasError('invalidFields')) || (control.invalid && control.touched);
     } else {
-      return controlFIO.hasError('invalidFields') || (controlFIO.touched && controlFIO.invalid);
+      return controlFIO.hasError('invalidFields')
+        || ((controlFIO.get('name').touched && controlFIO.get('name').invalid)
+        || (controlFIO.get('secondName').touched && controlFIO.get('secondName').invalid )
+        || (controlFIO.get('patronymic').touched && controlFIO.get('patronymic').invalid));
     }
   }
 

@@ -97,9 +97,12 @@ export class ChangeInfoComponent implements OnInit {
 
     if (controlName !== undefined) {
       const control = controlFIO.get(controlName);
-      return (controlFIO.hasError('invalidFields')) || (control.invalid);
+      return (controlFIO.hasError('invalidFields')) || (control.invalid && control.touched);
     } else {
-      return controlFIO.hasError('invalidFields') || (controlFIO.invalid);
+      return controlFIO.hasError('invalidFields')
+        || ((controlFIO.get('name').touched && controlFIO.get('name').invalid)
+          || (controlFIO.get('secondName').touched && controlFIO.get('secondName').invalid )
+          || (controlFIO.get('patronymic').touched && controlFIO.get('patronymic').invalid));
     }
   }
 
